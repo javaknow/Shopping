@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_color">#00bcd4</color>
+    <color name="dark_primary_color">#0097a7</color>
+    <color name="main_frame_bg">#f6f6f6</color>
+    <color name="left_drawer_bg">#f6f6f6</color>
+    <color name="accent_color">#ff6e40</color>
+    <color name="dark_accent_color">#30975D</color>
+    <color name="black_26_alpha">#42000000</color>
+</resources>
