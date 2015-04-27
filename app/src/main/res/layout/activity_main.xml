@@ -17,15 +17,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
-            <LinearLayout
+            <ScrollView
                 android:id="@+id/left_drawer"
                 android:layout_width="@dimen/drawer_width"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:background="@color/left_drawer_bg"
-                android:orientation="vertical">
-
-            </LinearLayout>
+                android:background="@color/main_frame_bg"
+                android:scrollbars="none">
+                <include
+                    layout="@layout/navigation_drawer_layout"/>
+            </ScrollView>
         </android.support.v4.widget.DrawerLayout>
-
+        <include
+            android:id="@+id/popub"
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/popub_layout"
+            />
 </RelativeLayout>

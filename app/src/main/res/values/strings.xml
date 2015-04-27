@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Shopping</string>
-    <string name="action_settings">Settings</string>
-
-    <!--Navigation Drawer-->
-    <string name="drawer_open">open</string>
-    <string name="drawer_close">close</string>
-
+    <string name="action_settings">设置</string>
+    <string name="action_share">分享</string>
+    <string name="action_search">搜索</string>
+    <string name="drawer_open">打开</string>
+    <string name="drawer_close">关闭</string>
+    <string name="search_all">全部</string>
+    <string name="search_palus">男装</string>
+    <string name="search_skirt">女装</string>
+    <string name="search_shoes">鞋包</string>
+    <string name="search_furniture">美妆</string>
+    <string name="search_ornament">配饰</string>
+    <string name="search_digital">数码</string>
+    <string name="search_food">美食</string>
+    <string name="search_more">更多</string>
+    <string name="category_text">商品分类</string>
+    <string name="individual_center">个人中心</string>
+    <string name="jiu_kuai_jiu">九块九包邮</string>
+    <string name="chao_zhi_qiang_gou">超值抢购</string>
+    <string name="competitive_products">精品推荐</string>
+    <string name="title_activity_search">搜索</string>
+    <string name="search_goods">搜索喜欢的宝贝...</string>
+    <string name="search_button_text">搜索</string>
+    <string name="search_history">搜索历史</string>
 </resources>

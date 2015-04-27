@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">settings</string>
+    <string name="action_share">share</string>
+    <string name="action_search">search</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="search_all">All</string>
+    <string name="search_palus">"Men's clothing"</string>
+    <string name="search_skirt">"Women's dress"</string>
+    <string name="search_shoes">Shoes</string>
+    <string name="search_furniture">Furniture</string>
+    <string name="search_ornament">Ornament</string>
+    <string name="search_digital">Digital</string>
+    <string name="search_food">Food</string>
+    <string name="search_more">More</string>
+    <string name="category_text">Categories</string>
+    <string name="individual_center">User Center</string>
+    <string name="jiu_kuai_jiu">9.9￥</string>
+    <string name="chao_zhi_qiang_gou">Scare Buying</string>
+    <string name="competitive_products">Cometitive Products</string>
+    <string name="title_activity_search">Search</string>
+    <string name="search_goods">Search your like...</string>
+    <string name="search_button_text">Search</string>
+    <string name="search_history">Search History</string>
+</resources>

@@ -5,5 +5,15 @@
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          android:icon="@drawable/ic_settings_dark"
+          app:showAsAction="ifRoom|withText"/>
+    <item android:id="@+id/action_search"
+          android:title="@string/action_search"
+          android:icon="@drawable/ic_search_white3"
+          app:showAsAction="ifRoom|withText"/>
+    <item android:id="@+id/action_share"
+          android:title="@string/action_share"
+          android:icon="@drawable/ic_share_white"
+          app:showAsAction="ifRoom|withText"/>
+
 </menu>

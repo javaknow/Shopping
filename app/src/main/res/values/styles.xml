@@ -10,16 +10,19 @@
         <!-- toolbar（actionbar）颜色 -->
         <item name="colorPrimary">@color/primary_color</item>
         <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">@color/dark_primary_color</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
         <!-- 标题颜色 -->
         <item name="android:textColorPrimary">@android:color/white</item>
         <!--可勾选控件被选择的颜色-->
         <item name="colorAccent">@color/accent_color</item>
         <item name="colorControlActivated">@color/accent_color</item>
         <!--各控件预设的颜色-->
-        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlNormal">@color/black_26_alpha</item>
         <!-- 箭头 -->
         <item name="drawerArrowStyle">@style/AppBaseTheme.DrawerArrowStyle</item>
+        <!--替换菜单-->
+        <!--<item name="android:actionOverflowButtonStyle">@style/AppTheme.overflow</item>-->
+        <item name="popupTheme">@style/PopupStyle</item>
     </style>
     <style name="AppBaseTheme.DrawerArrowStyle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
         <!--箭头旋转-->
@@ -27,9 +30,14 @@
         <!-- 箭头颜色 -->
         <item name="color">@android:color/white</item>
     </style>
-
+    <style name="AppTheme.overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_launcher</item>
+    </style>
     <!-- popup style -->
     <style name="ToolBarStyle" parent="">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+    <style name="PopupStyle">
+        <item name="android:colorBackground">@color/primary_color</item>
     </style>
 </resources>
