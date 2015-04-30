@@ -12,7 +12,7 @@
             android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <RelativeLayout
+            <FrameLayout
                 android:id="@+id/main_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -25,14 +25,8 @@
                 android:background="@color/main_frame_bg"
                 android:scrollbars="none">
                 <include
+                    android:id="@+id/nav_drawer"
                     layout="@layout/navigation_drawer_layout"/>
             </ScrollView>
         </android.support.v4.widget.DrawerLayout>
-        <include
-            android:id="@+id/popub"
-            android:layout_below="@id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/popub_layout"
-            />
 </RelativeLayout>

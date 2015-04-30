@@ -2,6 +2,9 @@ package com.shopping.swb.shopping.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -14,30 +17,51 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.shopping.swb.shopping.R;
+import com.shopping.swb.shopping.fragment.AllManagerFragment;
+import com.shopping.swb.shopping.fragment.DigitalManagerFragment;
+import com.shopping.swb.shopping.fragment.FoodManagerFragment;
+import com.shopping.swb.shopping.fragment.FurnitureManagerFragment;
+import com.shopping.swb.shopping.fragment.MenClothingManagerFragment;
+import com.shopping.swb.shopping.fragment.OrnamentManagerFragment;
+import com.shopping.swb.shopping.fragment.OthersManagerFragment;
+import com.shopping.swb.shopping.fragment.ShoesManagerFragment;
+import com.shopping.swb.shopping.fragment.WomenDressFragment;
+import com.shopping.swb.shopping.fragment.WomenDressManagerFragment;
+import com.shopping.swb.shopping.util.Utility;
+import com.shopping.swb.shopping.view.NavDrawerLayout;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.sso.UMSsoHandler;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 
 public class MainActivity extends ActionBarActivity implements DrawerLayout.DrawerListener
-            ,View.OnClickListener{
+            ,View.OnClickListener,NavDrawerLayout.NavDrawerClickListener{
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private View mCustomTitle;
+    private NavDrawerLayout mNavDrawerLayout;
+    private Fragment mFragmentShown;
+    private UMSocialService mController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setNavDrawer();
         setCustomTitle();
-        setOverflowShowingAlways();
+        //  setOverflowShowingAlways();
+        mNavDrawerLayout = (NavDrawerLayout) findViewById(R.id.nav_drawer);
+        mNavDrawerLayout.setNavDrawerClickListener(this);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_content,new AllManagerFragment()).commit();
     }
 
     private void setNavDrawer(){
@@ -52,8 +76,7 @@ public class MainActivity extends ActionBarActivity implements DrawerLayout.Draw
             mDrawerLayout.openDrawer(Gravity.START);
         }
     }
-
-    private  void setCustomTitle(){
+    private void setCustomTitle(){
         mCustomTitle = LayoutInflater.from(this).inflate(R.layout.actionbar_custom_title_layout,null);
         ((TextView)mCustomTitle).setText(R.string.search_all);
         mCustomTitle.setOnClickListener(this);
@@ -61,6 +84,7 @@ public class MainActivity extends ActionBarActivity implements DrawerLayout.Draw
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(mCustomTitle, layoutParams);
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -97,18 +121,17 @@ public class MainActivity extends ActionBarActivity implements DrawerLayout.Draw
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        Intent intent = null;
         switch (id){
             case R.id.action_search:
-                 intent = new Intent(this,SearchActivity.class);
+                Intent intent = new Intent(this,SearchActivity.class);
+                startActivity(intent);
+               // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.action_share:
+                mController = Utility.share(this,getResources().getString(R.string.share_content));
                 break;
             case R.id.action_settings:
                 break;
-        }
-        if(intent != null) {
-            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -171,5 +194,64 @@ public class MainActivity extends ActionBarActivity implements DrawerLayout.Draw
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void gotoUserCenter() {
+        mDrawerLayout.closeDrawer(Gravity.START);
+    }
+
+    @Override
+    public void setTitle(int position,String title) {
+        if(!((TextView)mCustomTitle).getText().equals(title)) {
+            ((TextView) mCustomTitle).setText(title);
+            handleFragment(position);
+        }
+        mDrawerLayout.closeDrawer(Gravity.START);
+    }
+
+    private void handleFragment(int position){
+        switch (position){
+            case 0:
+                mFragmentShown = new AllManagerFragment();
+                break;
+            case 1:
+                mFragmentShown = new WomenDressManagerFragment();
+                break;
+            case 2:
+                mFragmentShown = new MenClothingManagerFragment();
+                break;
+            case 3:
+                mFragmentShown = new FurnitureManagerFragment();
+                break;
+            case 4:
+                mFragmentShown = new ShoesManagerFragment();
+                break;
+            case 5:
+                mFragmentShown = new OrnamentManagerFragment();
+                break;
+            case 6:
+                mFragmentShown = new DigitalManagerFragment();
+                break;
+            case 7:
+                mFragmentShown = new FoodManagerFragment();
+                break;
+            case 8:
+                mFragmentShown = new OthersManagerFragment();
+                break;
+        }
+        if(mFragmentShown != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragmentShown).commit();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**使用SSO授权必须添加如下代码 */
+        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode) ;
+        if(ssoHandler != null){
+            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+        }
     }
 }

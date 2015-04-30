@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="women_dress">
+        <item>连衣裙</item>
+        <item>半身裙</item>
+        <item>T恤</item>
+        <item>针织衫</item>
+        <item>衬衫</item>
+        <item>雪纺衫</item>
+        <item>牛仔裤</item>
+        <item>打底裤</item>
+        <item>女士内裤</item>
+        <item>文胸</item>
+        <item>套装</item>
+        <item>中老年</item>
+        <item>大码女装</item>
+    </string-array>
+    <string-array name="men_clothing">
+        <item>T恤</item>
+        <item>衬衫</item>
+        <item>POLO衫</item>
+        <item>背心</item>
+        <item>牛仔裤</item>
+        <item>休闲裤</item>
+        <item>工装裤</item>
+        <item>夹克</item>
+        <item>中老年</item>
+        <item>男士内裤</item>
+    </string-array>
+    <string-array name="shoes">
+        <item>潮流女鞋</item>
+        <item>时尚女包</item>
+        <item>女士钱包</item>
+        <item>商务男包</item>
+        <item>精品男鞋</item>
+        <item>男士钱包</item>
+    </string-array>
+    <string-array name="ornament">
+        <item>围巾丝巾</item>
+        <item>女士腰带腰链</item>
+        <item>假发装饰</item>
+        <item>男士皮带</item>
+        <item>眼镜配饰</item>
+    </string-array>
+    <string-array name="furniture">
+        <item>面部护肤</item>
+        <item>时尚彩妆</item>
+        <item>身体护理</item>
+        <item>名贵香水</item>
+        <item>精油芳疗</item>
+        <item>个人洗护</item>
+        <item>男士护肤</item>
+    </string-array>
+    <string-array name="digital">
+        <item>生活电器</item>
+        <item>厨房电器</item>
+        <item>影音视听</item>
+        <item>个人护理</item>
+        <item>移动电源</item>
+        <item>耳机耳麦</item>
+        <item>数码配件</item>
+    </string-array>
+    <string-array name="food">
+        <item>婴儿食品</item>
+        <item>进口食品</item>
+        <item>香醇酒水</item>
+        <item>品牌名茶</item>
+        <item>健康饮料</item>
+        <item>粮油干活</item>
+    </string-array>
+    <string-array name="others">
+        <item>家纺布艺</item>
+        <item>家居饰品</item>
+        <item>厨房餐饮</item>
+        <item>宠物用品</item>
+        <item>婴儿用品</item>
+        <item>儿童玩具</item>
+        <item>童装童鞋</item>
+        <item>孕妈专区</item>
+    </string-array>
+</resources>

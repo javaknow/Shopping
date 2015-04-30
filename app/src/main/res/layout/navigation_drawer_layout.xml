@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.shopping.swb.shopping.view.NavDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:background="@drawable/ic_center_bg">
+        >
         <LinearLayout
+            android:id="@+id/user_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -118,10 +119,10 @@
             <!--android:layout_alignParentRight="true"-->
            <!--/>-->
     <!--</RelativeLayout>-->
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@color/divider"/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -162,6 +163,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/t0502"/>
             <TextView
+                android:id="@+id/text_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -184,6 +186,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/t0113"/>
             <TextView
+                android:id="@+id/text_women_dress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -210,8 +213,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/t0209"/>
+                android:src="@drawable/t0208"/>
             <TextView
+                android:id="@+id/text_men_clothing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -234,6 +238,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/t0302"/>
             <TextView
+                android:id="@+id/text_furniture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -262,6 +267,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/t0116"/>
             <TextView
+                android:id="@+id/text_shoes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -284,6 +290,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/t0114"/>
             <TextView
+                android:id="@+id/text_ornament"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -312,6 +319,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/t0606"/>
             <TextView
+                android:id="@+id/text_digital"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -334,6 +342,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/t0501"/>
             <TextView
+                android:id="@+id/text_food"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -362,6 +371,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/t0702"/>
             <TextView
+                android:id="@+id/text_others"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -380,4 +390,4 @@
             android:gravity="center_horizontal">
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</com.shopping.swb.shopping.view.NavDrawerLayout>

@@ -14,7 +14,7 @@
     <string name="search_ornament">配饰</string>
     <string name="search_digital">数码</string>
     <string name="search_food">美食</string>
-    <string name="search_more">更多</string>
+    <string name="search_more">其他</string>
     <string name="category_text">商品分类</string>
     <string name="individual_center">个人中心</string>
     <string name="jiu_kuai_jiu">九块九包邮</string>
@@ -24,4 +24,8 @@
     <string name="search_goods">搜索喜欢的宝贝...</string>
     <string name="search_button_text">搜索</string>
     <string name="search_history">搜索历史</string>
+    <string name="clear_history">清空历史记录</string>
+    <string name="search_hint">输入的内容不能为空</string>
+    <string name="search_no_history">当前没有历史记录</string>
+    <string name="share_content">爱淘宝是一款汇集淘宝网最新，最全的限时特价包邮商品。每天更新数千款特价商品,更有服饰、时尚、鞋包、美食、居家等九块九包邮商品,吃喝玩乐一站搞定。</string>
 </resources>
