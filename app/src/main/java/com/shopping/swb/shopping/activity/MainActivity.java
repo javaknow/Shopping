@@ -131,6 +131,8 @@ public class MainActivity extends ActionBarActivity implements DrawerLayout.Draw
                 mController = Utility.share(this,getResources().getString(R.string.share_content));
                 break;
             case R.id.action_settings:
+                Intent settingIntent = new Intent(this,SettingsActivity.class);
+                startActivity(settingIntent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -198,7 +200,8 @@ public class MainActivity extends ActionBarActivity implements DrawerLayout.Draw
 
     @Override
     public void gotoUserCenter() {
-        mDrawerLayout.closeDrawer(Gravity.START);
+        Intent intent = new Intent(this,UserCenterActivity.class);
+        startActivity(intent);
     }
 
     @Override

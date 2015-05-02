@@ -14,8 +14,8 @@
         <!-- 标题颜色 -->
         <item name="android:textColorPrimary">@android:color/white</item>
         <!--可勾选控件被选择的颜色-->
-        <item name="colorAccent">@color/accent_color</item>
-        <item name="colorControlActivated">@color/accent_color</item>
+        <item name="colorAccent">@color/primary_color</item>
+        <item name="colorControlActivated">@color/primary_color</item>
         <!--各控件预设的颜色-->
         <item name="colorControlNormal">@color/black_26_alpha</item>
         <!-- 箭头 -->

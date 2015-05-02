@@ -26,4 +26,15 @@
     <string name="clear_history">Clear Histories</string>
     <string name="search_hint">Not be empty</string>
     <string name="search_no_history">No Histories at present</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_user_center">User Center</string>
+    <string name="my_cart">My Cart</string>
+    <string name="my_order">My Orders</string>
+    <string name="my_logistic">My Logistics</string>
+    <string name="my_collect">My Collection</string>
+    <string name="message_push">Message Push</string>
+    <string name="check_update">Check Update</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="user_feedback">User Feedback</string>
+    <string name="about_us">About</string>
 </resources>
