@@ -22,7 +22,7 @@ import java.util.List;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class SearchActivity extends ActionBarActivity implements View.OnClickListener
-        , AdapterView.OnItemClickListener {
+        , AdapterView.OnItemClickListener,SearchHistoryAdapter.NoDataCallback {
     private Toolbar mToolbar;
     private ListView mListView;
     private EditText mEditText;
@@ -60,6 +60,7 @@ public class SearchActivity extends ActionBarActivity implements View.OnClickLis
         mAdapter = new SearchHistoryAdapter(this, mHistories);
         mListView.setAdapter(mAdapter);
         mNoHistoryHint = findViewById(R.id.no_history);
+        mAdapter.setNoDataCallback(this);
     }
 
     @Override
@@ -146,5 +147,12 @@ public class SearchActivity extends ActionBarActivity implements View.OnClickLis
     protected void onDestroy() {
         super.onDestroy();
         mHistories.clear();
+    }
+
+    @Override
+    public void handleNoData() {
+        if(mFancyButton != null){
+            mFancyButton.setVisibility(View.GONE);
+        }
     }
 }
