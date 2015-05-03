@@ -39,5 +39,6 @@
     <string name="clear_cache">清除缓存</string>
     <string name="user_feedback">用户反馈</string>
     <string name="about_us">关于我们</string>
+    <string name="title_activity_feedback">用户反馈</string>
 
 </resources>

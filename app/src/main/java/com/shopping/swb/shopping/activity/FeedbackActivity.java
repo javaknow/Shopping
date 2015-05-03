@@ -9,22 +9,22 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.shopping.swb.shopping.R;
-import com.shopping.swb.shopping.util.Utility;
-import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.fragment.FeedbackFragment;
 
-public class SettingsActivity extends ActionBarActivity implements View.OnClickListener{
+public class FeedbackActivity extends ActionBarActivity {
     private Toolbar mToolbar;
-    private View mFeedback;
-    private FeedbackAgent mFeedbackAgent;
-
+    private FeedbackFragment mFeedbackFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_feedback);
         initView();
+        String conversation_id = getIntent().getStringExtra(FeedbackFragment.BUNDLE_KEY_CONVERSATION_ID);
+        mFeedbackFragment = FeedbackFragment.newInstance(conversation_id);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, mFeedbackFragment)
+                .commit();
         com.umeng.fb.util.Log.LOG = true;
-        mFeedbackAgent = Utility.feedback(this);
     }
 
     private void initView(){
@@ -37,14 +37,11 @@ public class SettingsActivity extends ActionBarActivity implements View.OnClickL
                 finish();
             }
         });
-        mFeedback = findViewById(R.id.feedback);
-        mFeedback.setOnClickListener(this);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        getMenuInflater().inflate(R.menu.menu_feedback, menu);
         return true;
     }
 
@@ -64,16 +61,8 @@ public class SettingsActivity extends ActionBarActivity implements View.OnClickL
     }
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id){
-            case R.id.feedback:
-            //    mFeedbackAgent.startFeedbackActivity();
-                Intent intent = new Intent(this,FeedbackActivity.class);
-                String feedbackId = new FeedbackAgent(this).getDefaultConversation().getId();
-                intent.putExtra(FeedbackFragment.BUNDLE_KEY_CONVERSATION_ID,feedbackId);
-                startActivity(intent);
-                break;
-        }
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mFeedbackFragment.refresh();
     }
 }

@@ -36,6 +36,12 @@
             android:value="55418eb367e58e3b0d005cd7" >
         </meta-data>
 
+        <activity android:name="com.umeng.fb.ConversationActivity" />
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
@@ -94,12 +100,18 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.UserCenterActivity"
             android:label="@string/title_activity_user_center"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:label="@string/title_activity_feedback"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
     </application>
 

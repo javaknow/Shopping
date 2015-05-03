@@ -7,6 +7,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.message.PushAgent;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.QZoneSsoHandler;
@@ -98,5 +100,24 @@ public class Utility {
         controller.setShareContent(content);
         controller.openShare(activity,false);
         return controller;
+    }
+
+    public static FeedbackAgent feedback(Context context){
+        final FeedbackAgent feedbackAgent = new FeedbackAgent(context);
+        feedbackAgent.sync();
+        feedbackAgent.openAudioFeedback();
+        feedbackAgent.openFeedbackPush();
+    //    PushAgent.getInstance(context).enable();
+        //fb.setWelcomeInfo();
+        //  fb.setWelcomeInfo("Welcome to use umeng feedback app");
+//        FeedbackPush.getInstance(this).init(true);
+//        PushAgent.getInstance(this).setPushIntentServiceClass(MyPushIntentService.class);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean result = feedbackAgent.updateUserInfo();
+            }
+        }).start();
+        return feedbackAgent;
     }
 }
