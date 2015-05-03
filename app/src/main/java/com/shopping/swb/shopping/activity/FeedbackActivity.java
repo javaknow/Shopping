@@ -1,7 +1,6 @@
 package com.shopping.swb.shopping.activity;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,7 +10,7 @@ import android.view.View;
 import com.shopping.swb.shopping.R;
 import com.umeng.fb.fragment.FeedbackFragment;
 
-public class FeedbackActivity extends ActionBarActivity {
+public class FeedbackActivity extends BaseActivity {
     private Toolbar mToolbar;
     private FeedbackFragment mFeedbackFragment;
     @Override

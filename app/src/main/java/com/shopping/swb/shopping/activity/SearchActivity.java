@@ -1,6 +1,5 @@
 package com.shopping.swb.shopping.activity;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,7 +20,7 @@ import java.util.List;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class SearchActivity extends ActionBarActivity implements View.OnClickListener
+public class SearchActivity extends BaseActivity implements View.OnClickListener
         , AdapterView.OnItemClickListener,SearchHistoryAdapter.NoDataCallback {
     private Toolbar mToolbar;
     private ListView mListView;
