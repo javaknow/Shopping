@@ -9,7 +9,7 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [ UMENG_CHANNEL_VALUE:"default_channel" ]
+        manifestPlaceholders = [ UMENG_CHANNEL_VALUE:"_360" ]
     }
     buildTypes {
         release {
@@ -18,18 +18,18 @@ android {
         }
     }
     productFlavors {
-        default_channel{}
-        wandoujia{}
-        _360{}
-        yingyongbao{}
-        xiaomi{}
-        baidu{}
-        huawei{}
-        jifeng{}
+//        default_channel{}
+//        wandoujia{}
+//        _360{}
+//        yingyongbao{}
+//        xiaomi{}
+//        baidu{}
+//        huawei{}
+//        jifeng{}
     }
-    productFlavors.all { flavor ->
-        flavor.manifestPlaceholders = [ UMENG_CHANNEL_VALUE:name ]
-    }
+//    productFlavors.all { flavor ->
+//        flavor.manifestPlaceholders = [ UMENG_CHANNEL_VALUE:name ]
+//    }
 }
 
 dependencies {
@@ -38,8 +38,9 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.0.0'
     compile 'com.github.medyo:fancybuttons:1.2@aar'
-//    compile 'com.jpardogo.materialtabstrip:library:1.0.9'
+    //    compile 'com.jpardogo.materialtabstrip:library:1.0.9'
     compile 'com.umeng:fb:5.1.0'
+    compile 'com.umeng:message:1.4.1'
 }
 repositories {
     jcenter()

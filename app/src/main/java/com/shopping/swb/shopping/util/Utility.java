@@ -105,7 +105,7 @@ public class Utility {
     public static FeedbackAgent feedback(Context context){
         final FeedbackAgent feedbackAgent = new FeedbackAgent(context);
         feedbackAgent.sync();
-        feedbackAgent.openAudioFeedback();
+    //    feedbackAgent.openAudioFeedback();
         feedbackAgent.openFeedbackPush();
     //    PushAgent.getInstance(context).enable();
         //fb.setWelcomeInfo();
@@ -119,5 +119,9 @@ public class Utility {
             }
         }).start();
         return feedbackAgent;
+    }
+    public static PushAgent getPushAgent(Context context){
+        PushAgent pushAgent = PushAgent.getInstance(context);
+        return pushAgent;
     }
 }

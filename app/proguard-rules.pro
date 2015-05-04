@@ -52,6 +52,35 @@
 -keep class im.yixin.sdk.api.YXMessage {*;}
 -keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
 
--keep public class [your_pkg].R$*{
+-keep public class com.shopping.swb.shopping.R$*{
     public static final int *;
 }
+-keepclassmembers class * {
+    public <init>(org.json.JSONObject);
+}
+-dontshrink
+
+-keep,allowshrinking class com.umeng.message.* {
+        public <fields>;
+        public <methods>;
+}
+
+-keep,allowshrinking class com.umeng.message.protobuffer.MessageResponse$PushResponse$Info {
+        public <fields>;
+        public <methods>;
+}
+
+-keep,allowshrinking class com.umeng.message.protobuffer.MessageResponse$PushResponse$Info$Builder {
+        public <fields>;
+        public <methods>;
+}
+
+-keep,allowshrinking class org.android.agoo.impl.*{
+        public <fields>;
+        public <methods>;
+}
+
+-keep,allowshrinking class org.android.agoo.service.* {*;}
+
+-keep,allowshrinking class org.android.spdy.**{*;}
+

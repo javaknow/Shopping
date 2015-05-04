@@ -2,6 +2,9 @@ package com.shopping.swb.shopping.application;
 
 import android.app.Application;
 
+import com.shopping.swb.shopping.activity.FeedbackActivity;
+import com.umeng.fb.push.FeedbackPush;
+
 /**
  * Description:
  * Author: SheWenBiao
@@ -12,5 +15,7 @@ public class ShoppingApplicaiton extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+    //    FeedbackPush.getInstance(this).init(false);
+        FeedbackPush.getInstance(this).init(FeedbackActivity.class, true);
     }
 }

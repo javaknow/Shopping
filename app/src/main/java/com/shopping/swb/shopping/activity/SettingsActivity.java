@@ -11,11 +11,14 @@ import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.util.Utility;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.fragment.FeedbackFragment;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener{
     private Toolbar mToolbar;
     private View mFeedback;
     private FeedbackAgent mFeedbackAgent;
+    private PushAgent mPushAgent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         initView();
         com.umeng.fb.util.Log.LOG = true;
         mFeedbackAgent = Utility.feedback(this);
+        mPushAgent = Utility.getPushAgent(this);
+        mPushAgent.enable();
+        String device_token = UmengRegistrar.getRegistrationId(this);
     }
 
     private void initView(){
@@ -69,7 +75,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             case R.id.feedback:
             //    mFeedbackAgent.startFeedbackActivity();
                 Intent intent = new Intent(this,FeedbackActivity.class);
-                String feedbackId = new FeedbackAgent(this).getDefaultConversation().getId();
+                String feedbackId = mFeedbackAgent.getDefaultConversation().getId();
                 intent.putExtra(FeedbackFragment.BUNDLE_KEY_CONVERSATION_ID,feedbackId);
                 startActivity(intent);
                 break;
