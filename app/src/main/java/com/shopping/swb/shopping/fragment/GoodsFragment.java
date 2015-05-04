@@ -14,10 +14,9 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.shopping.swb.shopping.R;
-import com.shopping.swb.shopping.adapter.ShouYeGoodsAdapter;
-import com.shopping.swb.shopping.constant.DataUrl;
-import com.shopping.swb.shopping.entity.ShouYeGoods;
-import com.shopping.swb.shopping.entity.ShouYeGoodsList;
+import com.shopping.swb.shopping.adapter.GoodsAdapter;
+import com.shopping.swb.shopping.entity.Goods;
+import com.shopping.swb.shopping.entity.GoodsList;
 import com.shopping.swb.shopping.util.Utility;
 
 import org.apache.http.Header;
@@ -27,29 +26,50 @@ import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
-public class AllManagerFragment extends BaseFragment {
+
+public class GoodsFragment extends BaseFragment {
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+   // private static final String ARG_PARAM2 = "param2";
+
+    private String mUrl;
+    private String mTag;
     private static final int MSG_REQUEST_INFO = 0;
     private static final int MSG_SUCCESS = 1;
     private static final int MSG_FAILURE = 2;
     private GridView mGridView;
     private AsyncHttpClient mAsyncHttpClient;
-    private List<ShouYeGoods> mGoodsList = new ArrayList<>();
-    private ShouYeGoodsAdapter mGoodsAdapter;
+    private List<Goods> mGoodsList = new ArrayList<>();
+    private GoodsAdapter mGoodsAdapter;
     private CircularProgressBar mProgressBar;
-    public AllManagerFragment() {
+
+    public static GoodsFragment newInstance(String url) {
+        GoodsFragment fragment = new GoodsFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, url);
+     //   args.putString(ARG_PARAM2, tag);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public GoodsFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mUrl = getArguments().getString(ARG_PARAM1);
+      //      mTag = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_all_manager, container, false);
+        View view = inflater.inflate(R.layout.fragment_goods, container, false);
         mGridView = (GridView) view.findViewById(R.id.gridview);
         mProgressBar = (CircularProgressBar) view.findViewById(R.id.progress_bar);
         return view;
@@ -58,9 +78,9 @@ public class AllManagerFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGoodsAdapter = new ShouYeGoodsAdapter(mActivity,mGoodsList);
+        mGoodsAdapter = new GoodsAdapter(mActivity,mGoodsList);
         mGridView.setAdapter(mGoodsAdapter);
-        mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
+       // mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
     }
 
     private Handler mHandler = new Handler(){
@@ -69,6 +89,7 @@ public class AllManagerFragment extends BaseFragment {
             super.handleMessage(msg);
             switch (msg.what){
                 case MSG_REQUEST_INFO:
+                  //  mProgressBar.setVisibility(View.VISIBLE);
                     getInfoFromServer();
                     break;
                 case MSG_SUCCESS:
@@ -77,7 +98,7 @@ public class AllManagerFragment extends BaseFragment {
                     break;
                 case MSG_FAILURE:
                     mProgressBar.setVisibility(View.GONE);
-                    Toast.makeText(mActivity,R.string.network_unavailable,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, R.string.network_unavailable, Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -87,23 +108,37 @@ public class AllManagerFragment extends BaseFragment {
             mAsyncHttpClient = new AsyncHttpClient();
         }
         mAsyncHttpClient.setTimeout(8000);
-        mAsyncHttpClient.get(DataUrl.SHOUYE_URL,new AsyncHttpResponseHandler() {
+        mAsyncHttpClient.get(mUrl,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                    String json = new String(bytes,0,bytes.length);
-                    mHandler.sendMessage(mHandler.obtainMessage(MSG_SUCCESS,json));
+                String json = new String(bytes,0,bytes.length);
+                mHandler.sendMessage(mHandler.obtainMessage(MSG_SUCCESS,json));
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                    mHandler.sendEmptyMessage(MSG_FAILURE);
+                mHandler.sendEmptyMessage(MSG_FAILURE);
             }
         });
     }
     private void initGoods(String json){
-        ShouYeGoodsList goodsList = Utility.getGoods(json, ShouYeGoodsList.class);
-        mGoodsList.addAll(goodsList.getList());
-        mGoodsAdapter.notifyDataSetChanged();
+        try {
+            GoodsList goodsList = Utility.getGoods(json, GoodsList.class);
+            mGoodsList.clear();
+            mGoodsList.addAll(goodsList.getList());
+            mGoodsAdapter.notifyDataSetChanged();
+        }catch (Exception e){
+            e.printStackTrace();
+            mHandler.sendEmptyMessage(MSG_FAILURE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mGoodsAdapter.getCount()!=0){
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -122,6 +157,14 @@ public class AllManagerFragment extends BaseFragment {
         super.onDestroy();
         if(mGoodsList!=null){
             mGoodsList.clear();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser&&mGoodsList.isEmpty()){
+            mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
         }
     }
 }

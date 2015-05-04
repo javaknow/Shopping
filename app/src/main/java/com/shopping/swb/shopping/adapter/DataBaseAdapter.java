@@ -1,10 +1,14 @@
 package com.shopping.swb.shopping.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.shopping.swb.shopping.R;
 
 import java.util.List;
 
@@ -15,6 +19,14 @@ import java.util.List;
  * Time: 19:48
  */
 public abstract class DataBaseAdapter<T> extends BaseAdapter{
+    DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.default_image) // resource or drawable
+            .showImageForEmptyUri(R.drawable.default_image) // resource or drawable
+            .showImageOnFail(R.drawable.default_image) // resource or drawable
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .build();
     public List<T> mList;
     public Context mContext;
     public LayoutInflater mInflater;

@@ -3,7 +3,6 @@ package com.shopping.swb.shopping.util;
 import android.app.Activity;
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,8 +17,8 @@ import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Description:
@@ -123,5 +122,26 @@ public class Utility {
     public static PushAgent getPushAgent(Context context){
         PushAgent pushAgent = PushAgent.getInstance(context);
         return pushAgent;
+    }
+    public static <T> List<T> getGoodsList(String jsonString,Class<T> cls) {
+        List<T> list = new ArrayList<T>();
+        try {
+            Gson gson = new Gson();
+            list = gson.fromJson(jsonString, new TypeToken<List<T>>() {
+            }.getType());
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public static <T> T getGoods(String jsonString, Class<T> cls) {
+        T t = null;
+        try {
+            Gson gson = new Gson();
+            t = gson.fromJson(jsonString, cls);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return t;
     }
 }

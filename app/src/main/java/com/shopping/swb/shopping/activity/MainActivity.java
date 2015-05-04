@@ -27,11 +27,9 @@ import com.shopping.swb.shopping.fragment.MenClothingManagerFragment;
 import com.shopping.swb.shopping.fragment.OrnamentManagerFragment;
 import com.shopping.swb.shopping.fragment.OthersManagerFragment;
 import com.shopping.swb.shopping.fragment.ShoesManagerFragment;
-import com.shopping.swb.shopping.fragment.WomenDressFragment;
 import com.shopping.swb.shopping.fragment.WomenDressManagerFragment;
 import com.shopping.swb.shopping.util.Utility;
 import com.shopping.swb.shopping.view.NavDrawerLayout;
-import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.UMSsoHandler;
 

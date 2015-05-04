@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.adapter.FramentManagerAdapter;
+import com.shopping.swb.shopping.constant.DataUrl;
 import com.shopping.swb.shopping.view.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -30,12 +31,12 @@ public class FoodManagerFragment extends BaseFragment {
     }
     private void createFragments(){
         mFragments = new ArrayList<>();
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
+        mFragments.add(GoodsFragment.newInstance(DataUrl.YINGER_SHIPIN));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.JINKOU_SHIPIN));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.XIANGCHUN_JIUSHUI));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.PINPAI_MINGCHA));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.JIANKANG_YINLIAO));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.LIANGYOU_GANHUO));
     }
 
     public FoodManagerFragment() {
@@ -49,7 +50,7 @@ public class FoodManagerFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_manager, container, false);
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        mAdapter = new FramentManagerAdapter(getFragmentManager(),mFragments,mTypes);
+        mAdapter = new FramentManagerAdapter(getChildFragmentManager(),mFragments,mTypes);
         mViewPager.setAdapter(mAdapter);
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.indicator_tab);
         mSlidingTabLayout.setCustomTabView(R.layout.sliding_tab_indicator, android.R.id.text1);

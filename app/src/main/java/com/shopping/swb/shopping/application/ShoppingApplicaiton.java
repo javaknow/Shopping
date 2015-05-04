@@ -2,6 +2,8 @@ package com.shopping.swb.shopping.application;
 
 import android.app.Application;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.shopping.swb.shopping.activity.FeedbackActivity;
 import com.umeng.fb.push.FeedbackPush;
 
@@ -17,5 +19,6 @@ public class ShoppingApplicaiton extends Application{
         super.onCreate();
     //    FeedbackPush.getInstance(this).init(false);
         FeedbackPush.getInstance(this).init(FeedbackActivity.class, true);
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.adapter.FramentManagerAdapter;
+import com.shopping.swb.shopping.constant.DataUrl;
 import com.shopping.swb.shopping.view.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -31,16 +32,16 @@ public class MenClothingManagerFragment extends BaseFragment {
     }
     private void createFragments(){
         mFragments = new ArrayList<>();
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
-        mFragments.add(new WomenDressFragment());
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_T_XU));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_CHEN_SHAN));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_POLO_SHAN));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_BEI_XIN));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_NIU_ZAI_KU));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_XIU_XIAN_KU));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_GONG_ZHUANG));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_JIA_KE));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_ZHONG_LAO_NIAN));
+        mFragments.add(GoodsFragment.newInstance(DataUrl.MEN_NEI_KU));
     }
 
     public MenClothingManagerFragment() {
@@ -54,7 +55,7 @@ public class MenClothingManagerFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_manager, container, false);
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        mAdapter = new FramentManagerAdapter(getFragmentManager(),mFragments,mTypes);
+        mAdapter = new FramentManagerAdapter(getChildFragmentManager(),mFragments,mTypes);
         mViewPager.setAdapter(mAdapter);
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.indicator_tab);
         mSlidingTabLayout.setCustomTabView(R.layout.sliding_tab_indicator, android.R.id.text1);
