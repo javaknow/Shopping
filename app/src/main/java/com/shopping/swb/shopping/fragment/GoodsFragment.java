@@ -80,7 +80,11 @@ public class GoodsFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         mGoodsAdapter = new GoodsAdapter(mActivity,mGoodsList);
         mGridView.setAdapter(mGoodsAdapter);
-       // mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
+        if(mGoodsAdapter.getCount()!=0){
+            mProgressBar.setVisibility(View.GONE);
+        }else {
+            mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
+        }
     }
 
     private Handler mHandler = new Handler(){
@@ -136,9 +140,9 @@ public class GoodsFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(mGoodsAdapter.getCount()!=0){
-            mProgressBar.setVisibility(View.GONE);
-        }
+//        if(mGoodsAdapter.getCount()!=0){
+//            mProgressBar.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -160,11 +164,11 @@ public class GoodsFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser&&mGoodsList.isEmpty()){
-            mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if(isVisibleToUser&&mGoodsList.isEmpty()){
+//            mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
+//        }
+//    }
 }
