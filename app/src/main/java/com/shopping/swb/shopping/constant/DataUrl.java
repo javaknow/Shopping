@@ -145,5 +145,9 @@ public class DataUrl {
     public static final String TONGZHUANG_TONGXIE = PRFIX_GOODS_URL + "cid=50023647";
     //           8.孕妈专区接口：
     public static final String YUNMA_ZHUAN_QU = PRFIX_GOODS_URL + "cid=50029253";
-
+//商品详情接口 例：http://item.taobao.com/item.htm?ali_trackid=2:mm_33425731_6650368_22666083:1430666847_3k9_485738746&sche=ceshi&id=44851903626
+    public static final String PREFIX_GOODS_DETAIL_URL = "http://item.taobao.com/item.htm?ali_trackid=2:mm_33425731_6650368_22666083:1430666847_3k9_485738746&sche=ceshi&id=";
+    public static final String PREFIX_GOODS_DETAIL_URL2 = "http://cloud.yijia.com/goto/item.php?app_id=77&sche=ceshi&app_version=Andorid4.0.0&app_channel=baidu&id=";
+    public static final String PREFIX_GOODS_DETAIL_URL3 = "http://detail.tmall.com/item.htm?ali_trackid=2:mm_30762647_6674860_22704636:1430666771_3k8_1596410149&sche=ceshi&id=";
+    public static final String PREFIX_GOODS_DETAIL_URL4 = "http://detail.m.tmall.com/item.htm?ali_trackid=2:mm_33729398_6616196_22632787:1430665198_2k2_1721337636&sche=ceshi&e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoTsDB0baFXm89C2YwH%2Fk5v0NH20Bq91WcunIctZSaYTikkH%2F3cNLNFv2Ns00clQqV8jJ6bJdYH5AJhj2lwzkG10rggJgGmF3Zn74gCv4ts122Edm4pQNGryRrWvQSCnqF9UOo9PBUhz0F0ReFPiAVW0SqyCflwYQj2CEn8%3D&type=2&id=";
 }

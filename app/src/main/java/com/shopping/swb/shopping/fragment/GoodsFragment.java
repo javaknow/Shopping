@@ -1,6 +1,7 @@
 package com.shopping.swb.shopping.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.shopping.swb.shopping.R;
+import com.shopping.swb.shopping.activity.GoodsDetailActivity;
 import com.shopping.swb.shopping.adapter.GoodsAdapter;
 import com.shopping.swb.shopping.entity.Goods;
 import com.shopping.swb.shopping.entity.GoodsList;
@@ -31,7 +34,8 @@ import java.util.List;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 
-public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2{
+public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2
+            ,AdapterView.OnItemClickListener{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
    // private static final String ARG_PARAM2 = "param2";
@@ -77,6 +81,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
         View view = inflater.inflate(R.layout.fragment_goods, container, false);
         mGridView = (PullToRefreshGridView) view.findViewById(R.id.pulltorefresh_gridview);
         mGridView.setOnRefreshListener(this);
+        mGridView.setOnItemClickListener(this);
         mProgressBar = (CircularProgressBar) view.findViewById(R.id.progress_bar);
         mImageView = (ImageView) view.findViewById(R.id.have_no_data);
         return view;
@@ -188,6 +193,13 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
     @Override
     public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
+        intent.putExtra("id",mGoodsList.get(position).getItem_id());
+        startActivity(intent);
     }
 
 //    @Override

@@ -38,4 +38,5 @@
     <string name="user_feedback">User Feedback</string>
     <string name="about_us">About</string>
     <string name="title_activity_feedback">Feedback</string>
+    <string name="title_activity_goods_detail">Goods Detail</string>
 </resources>
