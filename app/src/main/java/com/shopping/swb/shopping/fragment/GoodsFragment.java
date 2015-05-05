@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -18,6 +20,8 @@ import com.shopping.swb.shopping.adapter.GoodsAdapter;
 import com.shopping.swb.shopping.entity.Goods;
 import com.shopping.swb.shopping.entity.GoodsList;
 import com.shopping.swb.shopping.util.Utility;
+import com.shopping.swb.shopping.view.pulltorefresh.PullToRefreshBase;
+import com.shopping.swb.shopping.view.pulltorefresh.PullToRefreshGridView;
 
 import org.apache.http.Header;
 
@@ -27,7 +31,7 @@ import java.util.List;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 
-public class GoodsFragment extends BaseFragment {
+public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
    // private static final String ARG_PARAM2 = "param2";
@@ -37,11 +41,12 @@ public class GoodsFragment extends BaseFragment {
     private static final int MSG_REQUEST_INFO = 0;
     private static final int MSG_SUCCESS = 1;
     private static final int MSG_FAILURE = 2;
-    private GridView mGridView;
+    private PullToRefreshGridView mGridView;
     private AsyncHttpClient mAsyncHttpClient;
     private List<Goods> mGoodsList = new ArrayList<>();
     private GoodsAdapter mGoodsAdapter;
     private CircularProgressBar mProgressBar;
+    private ImageView mImageView;
 
     public static GoodsFragment newInstance(String url) {
         GoodsFragment fragment = new GoodsFragment();
@@ -70,8 +75,10 @@ public class GoodsFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_goods, container, false);
-        mGridView = (GridView) view.findViewById(R.id.gridview);
+        mGridView = (PullToRefreshGridView) view.findViewById(R.id.pulltorefresh_gridview);
+        mGridView.setOnRefreshListener(this);
         mProgressBar = (CircularProgressBar) view.findViewById(R.id.progress_bar);
+        mImageView = (ImageView) view.findViewById(R.id.have_no_data);
         return view;
     }
 
@@ -98,11 +105,15 @@ public class GoodsFragment extends BaseFragment {
                     break;
                 case MSG_SUCCESS:
                     mProgressBar.setVisibility(View.GONE);
+                    mImageView.setVisibility(View.GONE);
                     initGoods(msg.obj.toString());
                     break;
                 case MSG_FAILURE:
                     mProgressBar.setVisibility(View.GONE);
-                    Toast.makeText(mActivity, R.string.network_unavailable, Toast.LENGTH_SHORT).show();
+                    if(mGoodsAdapter.getCount()==0){
+                        mImageView.setVisibility(View.VISIBLE);
+                    }
+                    mGridView.onRefreshComplete();
                     break;
             }
         }
@@ -131,6 +142,7 @@ public class GoodsFragment extends BaseFragment {
             mGoodsList.clear();
             mGoodsList.addAll(goodsList.getList());
             mGoodsAdapter.notifyDataSetChanged();
+            mGridView.onRefreshComplete();
         }catch (Exception e){
             e.printStackTrace();
             mHandler.sendEmptyMessage(MSG_FAILURE);
@@ -162,6 +174,20 @@ public class GoodsFragment extends BaseFragment {
         if(mGoodsList!=null){
             mGoodsList.clear();
         }
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+        String label = DateUtils.formatDateTime(mActivity, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE
+                | DateUtils.FORMAT_ABBREV_ALL);
+        // 设置刷新时候的字体
+        refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+        mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+
     }
 
 //    @Override

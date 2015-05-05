@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -19,6 +21,8 @@ import com.shopping.swb.shopping.constant.DataUrl;
 import com.shopping.swb.shopping.entity.ShouYeGoods;
 import com.shopping.swb.shopping.entity.ShouYeGoodsList;
 import com.shopping.swb.shopping.util.Utility;
+import com.shopping.swb.shopping.view.pulltorefresh.PullToRefreshBase;
+import com.shopping.swb.shopping.view.pulltorefresh.PullToRefreshGridView;
 
 import org.apache.http.Header;
 
@@ -27,15 +31,16 @@ import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
-public class AllManagerFragment extends BaseFragment {
+public class AllManagerFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2{
     private static final int MSG_REQUEST_INFO = 0;
     private static final int MSG_SUCCESS = 1;
     private static final int MSG_FAILURE = 2;
-    private GridView mGridView;
+    private PullToRefreshGridView mGridView;
     private AsyncHttpClient mAsyncHttpClient;
     private List<ShouYeGoods> mGoodsList = new ArrayList<>();
     private ShouYeGoodsAdapter mGoodsAdapter;
     private CircularProgressBar mProgressBar;
+    private ImageView mImageView;
     public AllManagerFragment() {
         // Required empty public constructor
     }
@@ -50,8 +55,10 @@ public class AllManagerFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all_manager, container, false);
-        mGridView = (GridView) view.findViewById(R.id.gridview);
+        mGridView = (PullToRefreshGridView) view.findViewById(R.id.gridview);
+        mGridView.setOnRefreshListener(this);
         mProgressBar = (CircularProgressBar) view.findViewById(R.id.progress_bar);
+        mImageView = (ImageView) view.findViewById(R.id.have_no_data);
         return view;
     }
 
@@ -73,11 +80,15 @@ public class AllManagerFragment extends BaseFragment {
                     break;
                 case MSG_SUCCESS:
                     mProgressBar.setVisibility(View.GONE);
+                    mImageView.setVisibility(View.GONE);
                     initGoods(msg.obj.toString());
                     break;
                 case MSG_FAILURE:
                     mProgressBar.setVisibility(View.GONE);
-                    Toast.makeText(mActivity,R.string.network_unavailable,Toast.LENGTH_SHORT).show();
+                    if(mGoodsAdapter.getCount() == 0){
+                        mImageView.setVisibility(View.VISIBLE);
+                    }
+                    mGridView.onRefreshComplete();
                     break;
             }
         }
@@ -101,9 +112,16 @@ public class AllManagerFragment extends BaseFragment {
         });
     }
     private void initGoods(String json){
-        ShouYeGoodsList goodsList = Utility.getGoods(json, ShouYeGoodsList.class);
-        mGoodsList.addAll(goodsList.getList());
-        mGoodsAdapter.notifyDataSetChanged();
+        try {
+            ShouYeGoodsList goodsList = Utility.getGoods(json, ShouYeGoodsList.class);
+            mGoodsList.clear();
+            mGoodsList.addAll(goodsList.getList());
+            mGoodsAdapter.notifyDataSetChanged();
+            mGridView.onRefreshComplete();
+        }catch (Exception e){
+            e.printStackTrace();
+            mHandler.sendEmptyMessage(MSG_FAILURE);
+        }
     }
 
     @Override
@@ -123,5 +141,19 @@ public class AllManagerFragment extends BaseFragment {
         if(mGoodsList!=null){
             mGoodsList.clear();
         }
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+        String label = DateUtils.formatDateTime(mActivity, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE
+                | DateUtils.FORMAT_ABBREV_ALL);
+        // 设置刷新时候的字体
+        refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+        mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+
     }
 }

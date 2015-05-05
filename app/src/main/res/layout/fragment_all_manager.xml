@@ -98,17 +98,24 @@
             <!---->
         <!--</LinearLayout>-->
     <!--</ScrollView>-->
-    <GridView
+    <com.shopping.swb.shopping.view.pulltorefresh.PullToRefreshGridView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"
-        android:padding="5dp"
+        android:padding="2dp"
         android:numColumns="2"
         android:choiceMode="singleChoice"
         android:listSelector="@android:color/transparent"
-        android:scrollbarStyle="outsideOverlay"/>
+        android:scrollbarStyle="outsideOverlay"
+        ptr:ptrHeaderTextColor="@color/category_text_color"
+        ptr:ptrHeaderSubTextColor="@color/primary_color"
+        ptr:ptrDrawableStart="@drawable/default_ptr_flip"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrScrollingWhileRefreshingEnabled="true"
+        />
         <fr.castorflex.android.circularprogressbar.CircularProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="35dp"
@@ -121,4 +128,11 @@
             app:cpb_min_sweep_angle="10"
             app:cpb_max_sweep_angle="300"
             android:layout_centerInParent="true"/>
+    <ImageView
+        android:id="@+id/have_no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/havenodata"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>
