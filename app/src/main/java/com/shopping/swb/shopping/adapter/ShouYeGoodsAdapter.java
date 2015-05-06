@@ -34,6 +34,7 @@ public class ShouYeGoodsAdapter extends DataBaseAdapter<ShouYeGoods>{
             viewHolder.goodsPrice = (TextView) convertView.findViewById(R.id.price);
             viewHolder.goodsOriginPrice = (TextView) convertView.findViewById(R.id.origin_price);
             viewHolder.discount = (TextView) convertView.findViewById(R.id.discount);
+            viewHolder.sold = (TextView) convertView.findViewById(R.id.sold);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
@@ -43,6 +44,7 @@ public class ShouYeGoodsAdapter extends DataBaseAdapter<ShouYeGoods>{
         viewHolder.goodsPrice.setText(mList.get(position).getNow_price()+"");
         viewHolder.goodsOriginPrice.setText(mList.get(position).getOrigin_price()+"");
         viewHolder.discount.setText(mList.get(position).getDiscount()+"");
+        viewHolder.sold.setText(mList.get(position).getDeal_num());
         return convertView;
     }
     static class ViewHolder{
@@ -51,5 +53,6 @@ public class ShouYeGoodsAdapter extends DataBaseAdapter<ShouYeGoods>{
         TextView goodsPrice;
         TextView goodsOriginPrice;
         TextView discount;
+        TextView sold;
     }
 }

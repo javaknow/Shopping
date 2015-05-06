@@ -1,5 +1,6 @@
 package com.shopping.swb.shopping.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -21,12 +22,13 @@ import java.util.List;
  * Time: 19:47
  */
 public class SearchHistoryAdapter extends DataBaseAdapter<String>{
-    private NoDataCallback mCallback;
+    private SearchHistoryCallback mCallback;
     public SearchHistoryAdapter(Context context, List<String> list) {
         super(context, list);
     }
-    public interface NoDataCallback{
-        public  void handleNoData();
+    public interface SearchHistoryCallback{
+        public void handleNoData();
+        public void commitHistory(String text);
     }
     @Override
     public View createView(final int position, View convertView, ViewGroup parent) {
@@ -35,6 +37,7 @@ public class SearchHistoryAdapter extends DataBaseAdapter<String>{
             convertView = mInflater.inflate(R.layout.item_search_list,parent,false);
             viewHolder = new ViewHolder();
             viewHolder.textView = (TextView) convertView.findViewById(R.id.text_search_history);
+            viewHolder.commit = (ImageView) convertView.findViewById(R.id.search_history_commit);
             viewHolder.delete = (ImageView) convertView.findViewById(R.id.search_history_delete);
             convertView.setTag(viewHolder);
         }else{
@@ -50,13 +53,19 @@ public class SearchHistoryAdapter extends DataBaseAdapter<String>{
                 mHandler.sendEmptyMessageDelayed(position,300);
             }
         });
+        viewHolder.commit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.commitHistory(mList.get(position));
+            }
+        });
         return convertView;
     }
     static class ViewHolder{
         TextView textView;
-        ImageView delete;
+        ImageView commit,delete;
     }
-    public void setNoDataCallback(NoDataCallback callback){
+    public void setSearchHistoryCallback(SearchHistoryCallback callback){
         this.mCallback = callback;
     }
     private Handler mHandler = new Handler(){

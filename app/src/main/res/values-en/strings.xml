@@ -39,4 +39,5 @@
     <string name="about_us">About</string>
     <string name="title_activity_feedback">Feedback</string>
     <string name="title_activity_goods_detail">Goods Detail</string>
+    <string name="title_activity_search_detail">SearchDetail</string>
 </resources>

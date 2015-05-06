@@ -8,6 +8,7 @@ package com.shopping.swb.shopping.entity;
  */
 public class Goods {
     private String title;
+    private String sold;
     private String pic_path;
     private double price;
     private double price_with_rate;
@@ -17,13 +18,22 @@ public class Goods {
     public Goods() {
     }
 
-    public Goods(String title, String pic_path, double price, double price_with_rate, double discount, String item_id) {
+    public Goods(String title, String sold, double price, String pic_path, double price_with_rate, double discount, String item_id) {
         this.title = title;
-        this.pic_path = pic_path;
+        this.sold = sold;
         this.price = price;
+        this.pic_path = pic_path;
         this.price_with_rate = price_with_rate;
         this.discount = discount;
         this.item_id = item_id;
+    }
+
+    public String getSold() {
+        return sold;
+    }
+
+    public void setSold(String sold) {
+        this.sold = sold;
     }
 
     public String getTitle() {
@@ -78,6 +88,7 @@ public class Goods {
     public String toString() {
         return "Goods{" +
                 "title='" + title + '\'' +
+                ", sold='" + sold + '\'' +
                 ", pic_path='" + pic_path + '\'' +
                 ", price=" + price +
                 ", price_with_rate=" + price_with_rate +

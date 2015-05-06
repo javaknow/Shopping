@@ -99,12 +99,37 @@
              android:layout_centerVertical="true"
              android:layout_marginLeft="2dp"/>
          <TextView
+             android:id="@+id/zhe"
              android:layout_toRightOf="@id/discount"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:textColor="@color/black_26_alpha"
              android:text="@string/discount"
              android:layout_centerVertical="true"/>
+         <TextView
+             android:id="@+id/xiaoliang"
+             android:layout_toRightOf="@id/zhe"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/sold"
+             android:layout_marginLeft="5dp"
+             android:layout_centerVertical="true"
+             android:textColor="@color/black_26_alpha"/>
+         <TextView
+             android:id="@+id/sold"
+             android:layout_toRightOf="@id/xiaoliang"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="asda"
+             android:layout_marginLeft="2dp"
+             android:layout_centerVertical="true"
+             android:textColor="@color/black_26_alpha"/>
+         <TextView
+             android:layout_toRightOf="@id/sold"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/jian"
+             android:textColor="@color/black_26_alpha"/>
          <ImageView
              android:layout_width="25dp"
              android:layout_height="wrap_content"

@@ -8,6 +8,7 @@ package com.shopping.swb.shopping.entity;
  */
 public class ShouYeGoods {
     private String num_iid;
+    private String deal_num;
     private String title;
     private String pic_url;
     private double now_price;
@@ -17,8 +18,9 @@ public class ShouYeGoods {
     public ShouYeGoods() {
     }
 
-    public ShouYeGoods(String num_iid, String title, String pic_url, double now_price, double origin_price, double discount) {
+    public ShouYeGoods(String num_iid, String deal_num,String title, String pic_url, double now_price, double origin_price, double discount) {
         this.num_iid = num_iid;
+        this.deal_num = deal_num;
         this.title = title;
         this.pic_url = pic_url;
         this.now_price = now_price;
@@ -32,6 +34,14 @@ public class ShouYeGoods {
 
     public void setNum_iid(String num_iid) {
         this.num_iid = num_iid;
+    }
+
+    public String getDeal_num() {
+        return deal_num;
+    }
+
+    public void setDeal_num(String deal_num) {
+        this.deal_num = deal_num;
     }
 
     public String getTitle() {
@@ -74,15 +84,5 @@ public class ShouYeGoods {
         this.discount = discount;
     }
 
-    @Override
-    public String toString() {
-        return "Goods{" +
-                "num_iid='" + num_iid + '\'' +
-                ", title='" + title + '\'' +
-                ", pic_url='" + pic_url + '\'' +
-                ", now_price=" + now_price +
-                ", origin_price=" + origin_price +
-                ", discount=" + discount +
-                '}';
-    }
+
 }

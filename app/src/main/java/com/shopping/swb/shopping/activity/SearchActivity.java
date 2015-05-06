@@ -1,10 +1,15 @@
 package com.shopping.swb.shopping.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -21,7 +26,7 @@ import java.util.List;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class SearchActivity extends BaseActivity implements View.OnClickListener
-        , AdapterView.OnItemClickListener,SearchHistoryAdapter.NoDataCallback {
+        , AdapterView.OnItemClickListener,SearchHistoryAdapter.SearchHistoryCallback {
     private Toolbar mToolbar;
     private ListView mListView;
     private EditText mEditText;
@@ -30,13 +35,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private List<String> mHistories = new ArrayList<>();
     private SearchHistoryAdapter mAdapter;
     private View mNoHistoryHint;
+    private InputMethodManager mImm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         initView();
-
+        mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     private void initView() {
@@ -59,7 +65,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         mAdapter = new SearchHistoryAdapter(this, mHistories);
         mListView.setAdapter(mAdapter);
         mNoHistoryHint = findViewById(R.id.no_history);
-        mAdapter.setNoDataCallback(this);
+        mListView.setOnItemClickListener(this);
+        mAdapter.setSearchHistoryCallback(this);
     }
 
     @Override
@@ -92,11 +99,19 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 if ("".equals(mEditText.getText().toString())) {
                     mEditText.setHint(R.string.search_hint);
                 } else {
-                    mEditText.setHint(R.string.search_goods);
-                    mHistories.add(mEditText.getText().toString());
-                    mAdapter.notifyDataSetChanged();
-                    mNoHistoryHint.setVisibility(View.GONE);
-                    mFancyButton.setVisibility(View.VISIBLE);
+                   // mImm.hideSoftInputFromWindow(mEditText.getWindowToken(),0);
+                    if(mImm.isActive()&&getCurrentFocus()!=null){
+                        if (getCurrentFocus().getWindowToken()!=null) {
+                            mImm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        }
+                    }
+                    if(!mHistories.contains(mEditText.getText().toString())){
+                        mHistories.add(mEditText.getText().toString());
+                    }
+                    Intent intent = new Intent(this,SearchDetailActivity.class);
+                    intent.putExtra("search", mEditText.getText().toString());
+                    startActivity(intent);
+                    mHandler.sendEmptyMessageDelayed(1,500);
                 }
                 break;
             case R.id.btn_clear_history:
@@ -107,10 +122,22 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 break;
         }
     }
-
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mAdapter.notifyDataSetChanged();
+            mEditText.setHint(R.string.search_goods);
+            mNoHistoryHint.setVisibility(View.GONE);
+            mFancyButton.setVisibility(View.VISIBLE);
+            mEditText.setText("");
+        }
+    };
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent = new Intent(this,SearchDetailActivity.class);
+        intent.putExtra("search", mHistories.get(position));
+        startActivity(intent);
     }
 
     @Override
@@ -153,5 +180,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         if(mFancyButton != null){
             mFancyButton.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void commitHistory(String text) {
+        mEditText.setText(text);
     }
 }

@@ -52,7 +52,11 @@
     <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label</string>
     <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
     <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
-
     <string name="title_activity_goods_detail">商品详情</string>
-
+    <string name="title_activity_search_detail">搜索详情</string>
+    <string name="ren_qi">人气</string>
+    <string name="xiao_liang">销量</string>
+    <string name="price">价格</string>
+    <string name="sold">月销量</string>
+    <string name="jian">件</string>
 </resources>

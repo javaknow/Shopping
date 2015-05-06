@@ -206,7 +206,11 @@
         <activity
             android:name=".activity.GoodsDetailActivity"
             android:label="@string/title_activity_goods_detail"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.SearchDetailActivity"
+            android:label="@string/title_activity_search_detail" >
         </activity>
     </application>
 
