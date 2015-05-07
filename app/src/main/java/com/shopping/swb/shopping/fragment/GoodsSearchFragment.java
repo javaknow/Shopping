@@ -225,10 +225,10 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                 mGridView.setAdapter(mGoodsAdapter);
                 if(mFlag == 0){
                     mIsDown = false;
-                    mArrow.setImageResource(R.drawable.ic_shangjiantou);
+                    mArrow.setImageResource(R.drawable.ic_arrowup);
                 }else{
                     mIsDown = true;
-                    mArrow.setImageResource(R.drawable.ic_xiajiantou);
+                    mArrow.setImageResource(R.drawable.ic_arrowdown);
                 }
                 break;
             case R.id.xiao_liang:
