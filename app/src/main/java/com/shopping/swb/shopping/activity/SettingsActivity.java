@@ -16,7 +16,7 @@ import com.umeng.message.UmengRegistrar;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener{
     private Toolbar mToolbar;
-    private View mFeedback;
+    private View mFeedback,mAbout;
     private FeedbackAgent mFeedbackAgent;
     private PushAgent mPushAgent;
 
@@ -44,6 +44,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         });
         mFeedback = findViewById(R.id.feedback);
         mFeedback.setOnClickListener(this);
+        mAbout = findViewById(R.id.about);
+        mAbout.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +80,10 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 String feedbackId = mFeedbackAgent.getDefaultConversation().getId();
                 intent.putExtra(FeedbackFragment.BUNDLE_KEY_CONVERSATION_ID,feedbackId);
                 startActivity(intent);
+                break;
+            case R.id.about:
+                Intent aboutIntent = new Intent(this,AboutActivity.class);
+                startActivity(aboutIntent);
                 break;
         }
     }

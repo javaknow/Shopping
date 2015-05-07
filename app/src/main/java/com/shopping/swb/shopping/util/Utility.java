@@ -2,6 +2,8 @@ package com.shopping.swb.shopping.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
@@ -143,5 +145,16 @@ public class Utility {
             // TODO: handle exception
         }
         return t;
+    }
+
+    public static PackageInfo getPackageInfo(Context context,String packageName){
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            PackageInfo info = packageManager.getPackageInfo(packageName,PackageManager.GET_CONFIGURATIONS);
+            return info;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
