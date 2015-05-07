@@ -56,7 +56,7 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
     private TextView mRenQi, mSold, mPriceText;
     private View mPriceLayout;
     private boolean mIsDown = false;
-    private int mState = 0;
+    private int mFlag = 0;
 
     public static GoodsSearchFragment newInstance(String url) {
         GoodsSearchFragment fragment = new GoodsSearchFragment();
@@ -223,6 +223,13 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                 mPriceText.setTextColor(getResources().getColor(R.color.category_text_color));
                 mGoodsAdapter = new GoodsAdapter(mActivity,mGoodsList);
                 mGridView.setAdapter(mGoodsAdapter);
+                if(mFlag == 0){
+                    mIsDown = false;
+                    mArrow.setImageResource(R.drawable.ic_shangjiantou);
+                }else{
+                    mIsDown = true;
+                    mArrow.setImageResource(R.drawable.ic_xiajiantou);
+                }
                 break;
             case R.id.xiao_liang:
                 mRenQi.setTextColor(getResources().getColor(R.color.category_text_color));
@@ -235,29 +242,38 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                     mGoodsAdapter = new GoodsAdapter(mActivity,list);
                     mGridView.setAdapter(mGoodsAdapter);
                 }
+                if(mFlag == 0){
+                    mIsDown = false;
+                    mArrow.setImageResource(R.drawable.ic_arrowup);
+                }else{
+                    mIsDown = true;
+                    mArrow.setImageResource(R.drawable.ic_arrowdown);
+                }
                 break;
             case R.id.price_layout:
                 mRenQi.setTextColor(getResources().getColor(R.color.category_text_color));
                 mSold.setTextColor(getResources().getColor(R.color.category_text_color));
                 mPriceText.setTextColor(getResources().getColor(R.color.primary_color));
                 if (!mIsDown) {
-                    mArrow.setImageResource(R.drawable.ic_up_arrow);
+                    mArrow.setImageResource(R.drawable.ic_arrowup_blue);
                     mIsDown = true;
+                    mFlag = 0;
                     if (mGoodsList != null && !mGoodsList.isEmpty()) {
                         List<Goods> list = new ArrayList<>();
                         list.addAll(mGoodsList);
-                        Collections.sort(list, new SortGoodsByPrice(0));
+                        Collections.sort(list, new SortGoodsByPrice(mFlag));
                         mGoodsAdapter = new GoodsAdapter(mActivity,list);
                         mGridView.setAdapter(mGoodsAdapter);
                     }
 
                 } else {
-                    mArrow.setImageResource(R.drawable.ic_down_arrow);
+                    mArrow.setImageResource(R.drawable.ic_arrowdown_blue);
                     mIsDown = false;
+                    mFlag = 1;
                     if (mGoodsList != null && !mGoodsList.isEmpty()) {
                         List<Goods> list = new ArrayList<>();
                         list.addAll(mGoodsList);
-                        Collections.sort(list, new SortGoodsByPrice(1));
+                        Collections.sort(list, new SortGoodsByPrice(mFlag));
                         mGoodsAdapter = new GoodsAdapter(mActivity,list);
                         mGridView.setAdapter(mGoodsAdapter);
                     }
