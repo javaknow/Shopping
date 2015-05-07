@@ -59,4 +59,9 @@
     <string name="price">价格</string>
     <string name="sold">月销量</string>
     <string name="jian">件</string>
+    <string name="title_activity_order">我的订单</string>
+    <string name="title_activity_logistics">我的物流</string>
+    <string name="title_activity_cart">我的购物车</string>
+    <string name="title_activity_collect">我的收藏</string>
+
 </resources>

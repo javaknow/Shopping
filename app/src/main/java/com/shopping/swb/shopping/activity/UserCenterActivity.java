@@ -1,5 +1,6 @@
 package com.shopping.swb.shopping.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -8,9 +9,10 @@ import android.view.View;
 
 import com.shopping.swb.shopping.R;
 
-public class UserCenterActivity extends BaseActivity {
+public class UserCenterActivity extends BaseActivity implements View.OnClickListener{
 
     private Toolbar mToolbar;
+    private View mOrder,mCart,mLogistics,mCollect;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,15 @@ public class UserCenterActivity extends BaseActivity {
                 finish();
             }
         });
+        mOrder = findViewById(R.id.order);
+        mCart = findViewById(R.id.cart);
+        mLogistics = findViewById(R.id.logistic);
+        mCollect = findViewById(R.id.collect);
+        mOrder.setOnClickListener(this);
+        mCart.setOnClickListener(this);
+        mLogistics.setOnClickListener(this);
+        mCollect.setOnClickListener(this);
+
     }
 
     @Override
@@ -49,5 +60,27 @@ public class UserCenterActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.order:
+                Intent orderIntent = new Intent(this,OrderActivity.class);
+                startActivity(orderIntent);
+                break;
+            case R.id.cart:
+                Intent cartIntent = new Intent(this,CartActivity.class);
+                startActivity(cartIntent);
+                break;
+            case R.id.logistic:
+                Intent logisticsIntent = new Intent(this,LogisticsActivity.class);
+                startActivity(logisticsIntent);
+                break;
+            case R.id.collect:
+                Intent collectIntent = new Intent(this,CollectActivity.class);
+                startActivity(collectIntent);
+                break;
+        }
     }
 }

@@ -212,6 +212,26 @@
             android:name=".activity.SearchDetailActivity"
             android:label="@string/title_activity_search_detail" >
         </activity>
+        <activity
+            android:name=".activity.OrderActivity"
+            android:label="@string/title_activity_order"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.LogisticsActivity"
+            android:label="@string/title_activity_logistics"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.CartActivity"
+            android:label="@string/title_activity_cart"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.CollectActivity"
+            android:label="@string/title_activity_collect"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
