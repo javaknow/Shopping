@@ -223,6 +223,14 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                 mPriceText.setTextColor(getResources().getColor(R.color.category_text_color));
                 mGoodsAdapter = new GoodsAdapter(mActivity,mGoodsList);
                 mGridView.setAdapter(mGoodsAdapter);
+                mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
+                        intent.putExtra("id", mGoodsList.get(position).getItem_id());
+                        startActivity(intent);
+                    }
+                });
                 if(mFlag == 0){
                     mIsDown = false;
                     mArrow.setImageResource(R.drawable.ic_arrowup);
@@ -236,11 +244,19 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                 mSold.setTextColor(getResources().getColor(R.color.primary_color));
                 mPriceText.setTextColor(getResources().getColor(R.color.category_text_color));
                 if (mGoodsList != null && !mGoodsList.isEmpty()) {
-                    List<Goods> list = new ArrayList<>();
+                   final List<Goods> list = new ArrayList<>();
                     list.addAll(mGoodsList);
                     Collections.sort(list, new SortGoodsBySold());
                     mGoodsAdapter = new GoodsAdapter(mActivity,list);
                     mGridView.setAdapter(mGoodsAdapter);
+                    mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                       @Override
+                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                           Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
+                           intent.putExtra("id", list.get(position).getItem_id());
+                           startActivity(intent);
+                       }
+                   });
                 }
                 if(mFlag == 0){
                     mIsDown = false;
@@ -258,25 +274,25 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                     mArrow.setImageResource(R.drawable.ic_arrowup_blue);
                     mIsDown = true;
                     mFlag = 0;
-                    if (mGoodsList != null && !mGoodsList.isEmpty()) {
-                        List<Goods> list = new ArrayList<>();
-                        list.addAll(mGoodsList);
-                        Collections.sort(list, new SortGoodsByPrice(mFlag));
-                        mGoodsAdapter = new GoodsAdapter(mActivity,list);
-                        mGridView.setAdapter(mGoodsAdapter);
-                    }
-
                 } else {
                     mArrow.setImageResource(R.drawable.ic_arrowdown_blue);
                     mIsDown = false;
                     mFlag = 1;
-                    if (mGoodsList != null && !mGoodsList.isEmpty()) {
-                        List<Goods> list = new ArrayList<>();
-                        list.addAll(mGoodsList);
-                        Collections.sort(list, new SortGoodsByPrice(mFlag));
-                        mGoodsAdapter = new GoodsAdapter(mActivity,list);
-                        mGridView.setAdapter(mGoodsAdapter);
-                    }
+                }
+                if (mGoodsList != null && !mGoodsList.isEmpty()) {
+                    final List<Goods> list = new ArrayList<>();
+                    list.addAll(mGoodsList);
+                    Collections.sort(list, new SortGoodsByPrice(mFlag));
+                    mGoodsAdapter = new GoodsAdapter(mActivity,list);
+                    mGridView.setAdapter(mGoodsAdapter);
+                    mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
+                            intent.putExtra("id", list.get(position).getItem_id());
+                            startActivity(intent);
+                        }
+                    });
                 }
                 break;
         }
