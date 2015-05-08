@@ -11,11 +11,10 @@ import java.util.Comparator;
  * Date: 2015-05-06
  * Time: 22:00
  */
-public class SortGoodsBySold implements Comparator {
+public class SortGoodsBySold implements Comparator<Goods> {
+
     @Override
-    public int compare(Object obj1, Object obj2) {
-        Goods g1 = (Goods) obj1;
-        Goods g2 = (Goods) obj2;
+    public int compare(Goods g1, Goods g2) {
         String str1 = g1.getSold();
         String str2 = g2.getSold();
         double sold1 = 0;
@@ -34,8 +33,10 @@ public class SortGoodsBySold implements Comparator {
         }
         if (sold1 > sold2) {
             return -1;
+        }else if(sold1 == sold2){
+            return 0;
+        }else {
+            return 1;
         }
-        return 1;
-
     }
 }
