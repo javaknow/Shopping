@@ -10,6 +10,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.melnykov.fab.FloatingActionButton;
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.activity.GoodsDetailActivity;
 import com.shopping.swb.shopping.adapter.GoodsAdapter;
@@ -35,7 +37,7 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 
 public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2
-            ,AdapterView.OnItemClickListener{
+            ,AdapterView.OnItemClickListener,View.OnClickListener,AbsListView.OnScrollListener{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
    // private static final String ARG_PARAM2 = "param2";
@@ -51,6 +53,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
     private GoodsAdapter mGoodsAdapter;
     private CircularProgressBar mProgressBar;
     private ImageView mImageView;
+    private FloatingActionButton mActionButton;
 
     public static GoodsFragment newInstance(String url) {
         GoodsFragment fragment = new GoodsFragment();
@@ -84,6 +87,10 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
         mGridView.setOnItemClickListener(this);
         mProgressBar = (CircularProgressBar) view.findViewById(R.id.progress_bar);
         mImageView = (ImageView) view.findViewById(R.id.have_no_data);
+        mActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
+        mActionButton.hide();
+        mActionButton.setOnClickListener(this);
+        mGridView.getRefreshableView().setOnScrollListener(this);
         return view;
     }
 
@@ -202,6 +209,32 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
         startActivity(intent);
     }
 
+    @Override
+    public void onClick(View v) {
+        if(mGoodsAdapter!=null){
+            mGridView.setAdapter(mGoodsAdapter);
+            mActionButton.hide();
+        }
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        switch (scrollState){
+            case SCROLL_STATE_FLING:
+                mActionButton.hide();
+                break;
+            case SCROLL_STATE_IDLE:
+                mActionButton.show();
+                break;
+            case SCROLL_STATE_TOUCH_SCROLL:
+                mActionButton.hide();
+                break;
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    }
 //    @Override
 //    public void setUserVisibleHint(boolean isVisibleToUser) {
 //        super.setUserVisibleHint(isVisibleToUser);

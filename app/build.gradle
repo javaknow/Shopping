@@ -41,6 +41,7 @@ dependencies {
     //    compile 'com.jpardogo.materialtabstrip:library:1.0.9'
     compile 'com.umeng:fb:5.1.0'
     compile 'com.umeng:message:1.4.1'
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
 }
 repositories {
     jcenter()

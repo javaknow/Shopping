@@ -9,6 +9,7 @@
                 android:id="@+id/pulltorefresh_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clipToPadding="false"
                 android:horizontalSpacing="2dp"
                 android:verticalSpacing="2dp"
                 android:padding="2dp"
@@ -43,4 +44,19 @@
         android:src="@drawable/havenodata"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
+    <com.melnykov.fab.FloatingActionButton
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_up_white_mini"
+        fab:fab_colorNormal="@color/primary_color"
+        fab:fab_colorPressed="@color/dark_primary_color"
+        fab:fab_shadow="false"
+        fab:fab_type="mini"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        />
 </RelativeLayout>
