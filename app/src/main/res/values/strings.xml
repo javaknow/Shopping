@@ -64,8 +64,8 @@
     <string name="title_activity_cart">我的购物车</string>
     <string name="title_activity_collect">我的收藏</string>
     <string name="title_activity_about">关于我们</string>
-    <string name="summary">"    爱淘宝主要经营男装，女装，数码，家居，母婴，鞋包，美妆，美食，美容护肤各大品牌类商品，更有全场九块九超值商品。每天上新，定有你所爱。爱淘宝精心挑选商品，比一比价格，我们都是最优惠的。"</string>
-    <string name="version_summary">爱淘宝V</string>
+    <string name="summary">"    天天购主要经营男装，女装，数码，家居，母婴，鞋包，美妆，美食，美容护肤各大品牌类商品，更有全场九块九超值商品。每天上新，定有你所爱。天天购精心挑选商品，比一比价格，我们都是最优惠的。"</string>
+    <string name="version_summary">天天购V</string>
     <string name="check_update_hint">当前已是最新版本</string>
     <string name="clear_cache_dialog_title">清除缓存</string>
     <string name="clear_cache_dialog_message">"    清除缓存将永久删除所有搜索记录，确定清除缓存吗？"</string>
