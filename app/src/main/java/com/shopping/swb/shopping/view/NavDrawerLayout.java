@@ -158,7 +158,7 @@ public class NavDrawerLayout extends LinearLayout implements View.OnClickListene
                 positon = 8;
                 break;
         }
-        if(mNavDrawerClickListener != null){
+        if(mNavDrawerClickListener != null && id!=R.id.user_center){
             mNavDrawerClickListener.setTitle(positon,mTitle);
         }
 
