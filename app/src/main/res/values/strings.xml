@@ -27,7 +27,8 @@
     <string name="clear_history">清空历史记录</string>
     <string name="search_hint">输入的内容不能为空</string>
     <string name="search_no_history">当前没有历史记录</string>
-    <string name="share_content">爱淘宝是一款汇集淘宝网最新，最全的限时特价包邮商品。每天更新数千款特价商品,更有服饰、时尚、鞋包、美食、居家等九块九包邮商品,吃喝玩乐一站搞定。</string>
+    <string name="share_content">"天天购是一款汇集淘宝网最新，最全的限时特价包邮商品。每天更新数千款特价商品,更有服饰、时尚、鞋包、美食、居家等九块九包邮商品,吃喝玩乐一站搞定。"</string>
+    <string name="share_url">"https://github.com/shewenbiao/Shopping"</string>
     <string name="title_activity_settings">设置</string>
     <string name="title_activity_user_center">个人中心</string>
     <string name="my_cart">我的购物车</string>

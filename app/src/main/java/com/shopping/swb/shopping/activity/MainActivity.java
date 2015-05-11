@@ -28,6 +28,7 @@ import com.shopping.swb.shopping.fragment.OrnamentManagerFragment;
 import com.shopping.swb.shopping.fragment.OthersManagerFragment;
 import com.shopping.swb.shopping.fragment.ShoesManagerFragment;
 import com.shopping.swb.shopping.fragment.WomenDressManagerFragment;
+import com.shopping.swb.shopping.util.UMUtil;
 import com.shopping.swb.shopping.util.Utility;
 import com.shopping.swb.shopping.view.NavDrawerLayout;
 import com.umeng.socialize.controller.UMSocialService;
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         mNavDrawerLayout.setNavDrawerClickListener(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content,new AllManagerFragment()).commit();
+        mController = UMUtil.share(this, getResources().getString(R.string.share_content));
     }
 
     private void setNavDrawer(){
@@ -124,7 +126,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
                // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.action_share:
-                mController = Utility.share(this,getResources().getString(R.string.share_content));
+                mController.openShare(this,false);
                 break;
             case R.id.action_settings:
                 Intent settingIntent = new Intent(this,SettingsActivity.class);

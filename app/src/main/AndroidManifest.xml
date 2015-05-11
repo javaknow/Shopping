@@ -112,6 +112,12 @@
         <activity
             android:name="com.renn.rennsdk.oauth.OAuthActivity"
             android:configChanges="orientation|navigation|keyboardHidden" />
+        <!--<activity-->
+            <!--android:name=".yxapi.YXEntryActivity"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+            <!--android:exported="true"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings"

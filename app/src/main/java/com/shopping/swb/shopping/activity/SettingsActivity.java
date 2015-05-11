@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.constant.AppConstants;
+import com.shopping.swb.shopping.util.UMUtil;
 import com.shopping.swb.shopping.util.Utility;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.fragment.FeedbackFragment;
@@ -31,8 +32,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_settings);
         initView();
         com.umeng.fb.util.Log.LOG = true;
-        mFeedbackAgent = Utility.feedback(this);
-        mPushAgent = Utility.getPushAgent(this);
+        mFeedbackAgent = UMUtil.feedback(this);
+        mPushAgent = UMUtil.getPushAgent(this);
         mPushAgent.enable();
         String device_token = UmengRegistrar.getRegistrationId(this);
     }
