@@ -1,42 +1,12 @@
 package com.shopping.swb.shopping.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.shopping.swb.shopping.R;
-import com.umeng.fb.FeedbackAgent;
-import com.umeng.message.PushAgent;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.UMShareMsg;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.laiwang.controller.UMLWHandler;
-import com.umeng.socialize.media.QQShareContent;
-import com.umeng.socialize.media.QZoneShareContent;
-import com.umeng.socialize.media.RenrenShareContent;
-import com.umeng.socialize.media.SinaShareContent;
-import com.umeng.socialize.media.SmsShareContent;
-import com.umeng.socialize.media.TencentWbShareContent;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.sso.EmailHandler;
-import com.umeng.socialize.sso.QZoneSsoHandler;
-import com.umeng.socialize.sso.RenrenSsoHandler;
-import com.umeng.socialize.sso.SinaSsoHandler;
-import com.umeng.socialize.sso.SmsHandler;
-import com.umeng.socialize.sso.TencentWBSsoHandler;
-import com.umeng.socialize.sso.UMQQSsoHandler;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
-import com.umeng.socialize.weixin.media.CircleShareContent;
-import com.umeng.socialize.weixin.media.WeiXinShareContent;
-import com.umeng.socialize.yixin.controller.UMYXHandler;
-import com.umeng.socialize.ynote.controller.UMYNoteHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 

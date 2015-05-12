@@ -23,9 +23,6 @@ import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.SmsHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
-import com.umeng.socialize.weixin.media.CircleShareContent;
-import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import com.umeng.socialize.yixin.controller.UMYXHandler;
 import com.umeng.socialize.ynote.controller.UMYNoteHandler;
 
@@ -36,17 +33,6 @@ import com.umeng.socialize.ynote.controller.UMYNoteHandler;
  * Time: 11:01
  */
 public class UMUtil {
-    public static void shareToWeixin(Context context) {
-        String appId = "wx967daebe835fbeac";
-        String appSecret = "5fa9e68ca3970e87a1f83e563c8dcbce";
-// 添加微信平台
-        UMWXHandler wxHandler = new UMWXHandler(context, appId, appSecret);
-        wxHandler.addToSocialSDK();
-// 添加微信朋友圈
-        UMWXHandler wxCircleHandler = new UMWXHandler(context, appId, appSecret);
-        wxCircleHandler.setToCircle(true);
-        wxCircleHandler.addToSocialSDK();
-    }
 
     public static void shareToQQ(Activity activity) {
         //参数1为当前Activity，参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
@@ -149,29 +135,6 @@ public class UMUtil {
         return qzoneContent;
     }
 
-    public static WeiXinShareContent setWXShareContent(Context context){
-        //设置微信好友分享内容
-        WeiXinShareContent weixinContent = new WeiXinShareContent();
-        //设置分享文字
-        weixinContent.setShareContent(context.getString(R.string.share_content));
-//设置title
-        weixinContent.setTitle(context.getResources().getString(R.string.app_name));
-//设置分享内容跳转URL
-        weixinContent.setTargetUrl(context.getString(R.string.share_url));
-//设置分享图片
-        weixinContent.setShareImage(new UMImage(context, R.mipmap.logo));
-        return weixinContent;
-    }
-    public static CircleShareContent setWXCirlceShareContent(Context context){
-//设置微信朋友圈分享内容
-        CircleShareContent circleContent = new CircleShareContent();
-        circleContent.setShareContent(context.getString(R.string.share_content));
-//设置朋友圈title
-        circleContent.setTitle(context.getResources().getString(R.string.app_name));
-        circleContent.setShareImage(new UMImage(context, R.mipmap.logo));
-        circleContent.setTargetUrl(context.getString(R.string.share_url));
-        return circleContent;
-    }
     public static SinaShareContent setSinaShareContent(Context context){
         SinaShareContent sinaShareContent = new SinaShareContent();
         sinaShareContent.setTitle(context.getResources().getString(R.string.app_name));
@@ -201,7 +164,7 @@ public class UMUtil {
     public static UMSocialService share(Activity activity, String content) {
         shareToQQ(activity);
         shareToQQZone(activity);
-        shareToWeixin(activity);
+   //     shareToWeixin(activity);
         shareToRenren(activity);
         shareToSina();
         shareToTencent();
@@ -217,8 +180,6 @@ public class UMUtil {
 //        umImage.setTargetUrl(activity.getString(R.string.share_url));
 //        controller.setShareMedia(umImage);
         controller.setShareMedia(setQQShareContent(activity));
-        controller.setShareMedia(setWXShareContent(activity));
-        controller.setShareMedia(setWXCirlceShareContent(activity));
         controller.setShareMedia(setQZoneShareContent(activity));
         controller.setShareMedia(setSinaShareContent(activity));
         controller.setShareMedia(setRenrenShareContent(activity));
