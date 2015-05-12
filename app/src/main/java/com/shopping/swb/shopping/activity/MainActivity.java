@@ -2,6 +2,7 @@ package com.shopping.swb.shopping.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -70,8 +71,11 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open,
                 R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        if(!mDrawerLayout.isDrawerOpen(Gravity.START)){
+        if(!mDrawerLayout.isDrawerOpen(Gravity.START)
+                &&PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("IS_FIRST_USE_APP",true)){
             mDrawerLayout.openDrawer(Gravity.START);
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("IS_FIRST_USE_APP",false).apply();
         }
     }
     private void setCustomTitle(){
