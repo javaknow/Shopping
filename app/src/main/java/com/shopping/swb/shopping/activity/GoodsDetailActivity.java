@@ -1,5 +1,6 @@
 package com.shopping.swb.shopping.activity;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,15 +11,19 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.constant.DataUrl;
 
+import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+
 public class GoodsDetailActivity extends ActionBarActivity {
     private Toolbar mToolbar;
     private String mGoodsId;
     private WebView mWebView;
+    private CircularProgressBar mLoding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,7 @@ public class GoodsDetailActivity extends ActionBarActivity {
                 finish();
             }
         });
+        mLoding = (CircularProgressBar) findViewById(R.id.loading);
         mWebView = (WebView) findViewById(R.id.goods_webview);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -43,9 +49,20 @@ public class GoodsDetailActivity extends ActionBarActivity {
         // 在WebView中打开链接（默认行为是使用浏览器，设置此项后都用WebView打开）
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                mLoding.setVisibility(View.GONE);
+                super.onPageFinished(view, url);
             }
         });
     }

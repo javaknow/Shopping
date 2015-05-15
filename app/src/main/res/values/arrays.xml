@@ -78,4 +78,14 @@
         <item>童装童鞋</item>
         <item>孕妈专区</item>
     </string-array>
+    <integer-array name="loading_bar_bg_color">
+        <item>@color/primary_color</item>
+        <item>@color/accent_color</item>
+        <item>@android:color/holo_red_light</item>
+    </integer-array>
+    <integer-array  name="loading_bar_bg_color2">
+        <item>0xff339ee2</item>
+        <item>0xff1ec52b</item>
+        <item>0xffff0000</item>
+    </integer-array>
 </resources>
