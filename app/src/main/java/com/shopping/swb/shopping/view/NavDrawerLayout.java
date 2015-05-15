@@ -5,9 +5,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
+import com.shopping.swb.shopping.constant.AppConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,7 @@ public class NavDrawerLayout extends LinearLayout implements View.OnClickListene
     private String mTitle;
     private NavDrawerClickListener mNavDrawerClickListener;
     private List<TextView> mTextViewList;
+    private int mPosition = 0;
 
     public interface NavDrawerClickListener{
         public void gotoUserCenter();
@@ -114,7 +115,6 @@ public class NavDrawerLayout extends LinearLayout implements View.OnClickListene
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        int positon = 0;
         switch (id){
             case R.id.user_center:
                 if(mNavDrawerClickListener != null){
@@ -123,47 +123,47 @@ public class NavDrawerLayout extends LinearLayout implements View.OnClickListene
                 break;
             case R.id.all:
                 mTitle = getResources().getString(R.string.search_all);
-                positon = 0;
+                mPosition = AppConstants.HANDLE_ALL;
                 break;
             case R.id.women_dress:
                 mTitle = getResources().getString(R.string.search_skirt);
-                positon = 1;
+                mPosition = AppConstants.HANDLE_WOMEN;
                 break;
             case R.id.men_clothing:
                 mTitle = getResources().getString(R.string.search_palus);
-                positon = 2;
+                mPosition = AppConstants.HANDLE_MEN;
                 break;
             case R.id.furniture:
                 mTitle = getResources().getString(R.string.search_furniture);
-                positon = 3;
+                mPosition = AppConstants.HANDLE_FURNITURE;
                 break;
             case R.id.shoes:
                 mTitle = getResources().getString(R.string.search_shoes);
-                positon = 4;
+                mPosition = AppConstants.HANDLE_SHOES;
                 break;
             case R.id.ornament:
                 mTitle = getResources().getString(R.string.search_ornament);
-                positon = 5;
+                mPosition = AppConstants.HANDLE_ORNAMENT;
                 break;
             case R.id.digital:
                 mTitle = getResources().getString(R.string.search_digital);
-                positon = 6;
+                mPosition = AppConstants.HANDLE_DIGITAL;
                 break;
             case R.id.food:
                 mTitle = getResources().getString(R.string.search_food);
-                positon = 7;
+                mPosition = AppConstants.HANDLE_FOOD;
                 break;
             case R.id.more:
                 mTitle = getResources().getString(R.string.search_more);
-                positon = 8;
+                mPosition = AppConstants.HANDLE_MORE;
                 break;
         }
         if(mNavDrawerClickListener != null && id!=R.id.user_center){
-            mNavDrawerClickListener.setTitle(positon,mTitle);
+            mNavDrawerClickListener.setTitle(mPosition,mTitle);
         }
 
         for(int i=0;i<mTextViewList.size();i++){
-            if(i == positon){
+            if(i == mPosition){
                 mTextViewList.get(i).setTextColor(getResources().getColor(R.color.primary_color));
             }else{
                 mTextViewList.get(i).setTextColor(getResources().getColor(R.color.category_text_color));

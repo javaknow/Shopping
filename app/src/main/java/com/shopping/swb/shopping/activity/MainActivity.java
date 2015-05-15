@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.shopping.swb.shopping.R;
+import com.shopping.swb.shopping.constant.AppConstants;
 import com.shopping.swb.shopping.fragment.AllManagerFragment;
 import com.shopping.swb.shopping.fragment.DigitalManagerFragment;
 import com.shopping.swb.shopping.fragment.FoodManagerFragment;
@@ -217,31 +218,31 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     private void handleFragment(int position){
         switch (position){
-            case 0:
+            case AppConstants.HANDLE_ALL:
                 mFragmentShown = new AllManagerFragment();
                 break;
-            case 1:
+            case AppConstants.HANDLE_WOMEN:
                 mFragmentShown = new WomenDressManagerFragment();
                 break;
-            case 2:
+            case AppConstants.HANDLE_MEN:
                 mFragmentShown = new MenClothingManagerFragment();
                 break;
-            case 3:
+            case AppConstants.HANDLE_FURNITURE:
                 mFragmentShown = new FurnitureManagerFragment();
                 break;
-            case 4:
+            case AppConstants.HANDLE_SHOES:
                 mFragmentShown = new ShoesManagerFragment();
                 break;
-            case 5:
+            case AppConstants.HANDLE_ORNAMENT:
                 mFragmentShown = new OrnamentManagerFragment();
                 break;
-            case 6:
+            case AppConstants.HANDLE_DIGITAL:
                 mFragmentShown = new DigitalManagerFragment();
                 break;
-            case 7:
+            case AppConstants.HANDLE_FOOD:
                 mFragmentShown = new FoodManagerFragment();
                 break;
-            case 8:
+            case AppConstants.HANDLE_MORE:
                 mFragmentShown = new OthersManagerFragment();
                 break;
         }
