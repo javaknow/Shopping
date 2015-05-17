@@ -49,6 +49,7 @@ public class AllManagerFragment extends BaseFragment implements PullToRefreshBas
     private CircularProgressBar mProgressBar;
     private ImageView mImageView;
     private FloatingActionButton mActionButton;
+    private int mFirstVisibleItem = 0;
     public AllManagerFragment() {
         // Required empty public constructor
     }
@@ -192,7 +193,11 @@ public class AllManagerFragment extends BaseFragment implements PullToRefreshBas
                 mActionButton.hide();
                 break;
             case SCROLL_STATE_IDLE:
-                mActionButton.show();
+                if(mFirstVisibleItem == 0){
+                    mActionButton.hide();
+                }else {
+                    mActionButton.show();
+                }
                 break;
             case SCROLL_STATE_TOUCH_SCROLL:
                 mActionButton.hide();
@@ -202,5 +207,6 @@ public class AllManagerFragment extends BaseFragment implements PullToRefreshBas
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        mFirstVisibleItem = firstVisibleItem;
     }
 }

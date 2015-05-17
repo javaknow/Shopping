@@ -54,6 +54,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
     private CircularProgressBar mProgressBar;
     private ImageView mImageView;
     private FloatingActionButton mActionButton;
+    private int mFirstVisibleItem = 0;
 
     public static GoodsFragment newInstance(String url) {
         GoodsFragment fragment = new GoodsFragment();
@@ -224,7 +225,11 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
                 mActionButton.hide();
                 break;
             case SCROLL_STATE_IDLE:
-                mActionButton.show();
+                if(mFirstVisibleItem == 0){
+                    mActionButton.hide();
+                }else {
+                    mActionButton.show();
+                }
                 break;
             case SCROLL_STATE_TOUCH_SCROLL:
                 mActionButton.hide();
@@ -234,6 +239,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        mFirstVisibleItem = firstVisibleItem;
     }
 //    @Override
 //    public void setUserVisibleHint(boolean isVisibleToUser) {
