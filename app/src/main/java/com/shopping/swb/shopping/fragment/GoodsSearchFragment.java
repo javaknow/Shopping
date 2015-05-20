@@ -39,7 +39,7 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 
 public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2
-        , AdapterView.OnItemClickListener, View.OnClickListener,AbsListView.OnScrollListener{
+        , AdapterView.OnItemClickListener, View.OnClickListener, AbsListView.OnScrollListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     // private static final String ARG_PARAM2 = "param2";
@@ -219,6 +219,12 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
         intent.putExtra("id", mGoodsList.get(position).getItem_id());
+        intent.putExtra("title", mGoodsList.get(position).getTitle());
+        intent.putExtra("origin_price", mGoodsList.get(position).getPrice_with_rate());
+        intent.putExtra("now_price", mGoodsList.get(position).getPrice());
+        intent.putExtra("discount", mGoodsList.get(position).getDiscount());
+        intent.putExtra("sold", mGoodsList.get(position).getSold());
+        intent.putExtra("pic_url", mGoodsList.get(position).getPic_path());
         startActivity(intent);
     }
 
@@ -229,7 +235,7 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                 mRenQi.setTextColor(getResources().getColor(R.color.primary_color));
                 mSold.setTextColor(getResources().getColor(R.color.category_text_color));
                 mPriceText.setTextColor(getResources().getColor(R.color.category_text_color));
-                mGoodsAdapter = new GoodsAdapter(mActivity,mGoodsList);
+                mGoodsAdapter = new GoodsAdapter(mActivity, mGoodsList);
                 mGridView.setAdapter(mGoodsAdapter);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -239,10 +245,10 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                         startActivity(intent);
                     }
                 });
-                if(mFlag == 0){
+                if (mFlag == 0) {
                     mIsDown = false;
                     mArrow.setImageResource(R.drawable.ic_arrowup);
-                }else{
+                } else {
                     mIsDown = true;
                     mArrow.setImageResource(R.drawable.ic_arrowdown);
                 }
@@ -252,24 +258,24 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                 mSold.setTextColor(getResources().getColor(R.color.primary_color));
                 mPriceText.setTextColor(getResources().getColor(R.color.category_text_color));
                 if (mGoodsList != null && !mGoodsList.isEmpty()) {
-                   final List<Goods> list = new ArrayList<>();
+                    final List<Goods> list = new ArrayList<>();
                     list.addAll(mGoodsList);
                     Collections.sort(list, new SortGoodsBySold());
-                    mGoodsAdapter = new GoodsAdapter(mActivity,list);
+                    mGoodsAdapter = new GoodsAdapter(mActivity, list);
                     mGridView.setAdapter(mGoodsAdapter);
                     mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                       @Override
-                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                           Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
-                           intent.putExtra("id", list.get(position).getItem_id());
-                           startActivity(intent);
-                       }
-                   });
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
+                            intent.putExtra("id", list.get(position).getItem_id());
+                            startActivity(intent);
+                        }
+                    });
                 }
-                if(mFlag == 0){
+                if (mFlag == 0) {
                     mIsDown = false;
                     mArrow.setImageResource(R.drawable.ic_arrowup);
-                }else{
+                } else {
                     mIsDown = true;
                     mArrow.setImageResource(R.drawable.ic_arrowdown);
                 }
@@ -291,7 +297,7 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                     final List<Goods> list = new ArrayList<>();
                     list.addAll(mGoodsList);
                     Collections.sort(list, new SortGoodsByPrice(mFlag));
-                    mGoodsAdapter = new GoodsAdapter(mActivity,list);
+                    mGoodsAdapter = new GoodsAdapter(mActivity, list);
                     mGridView.setAdapter(mGoodsAdapter);
                     mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -304,7 +310,7 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
                 }
                 break;
             case R.id.fab:
-                if(mGoodsAdapter!=null){
+                if (mGoodsAdapter != null) {
                     mGridView.setAdapter(mGoodsAdapter);
                     mActionButton.hide();
                 }
@@ -314,14 +320,14 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        switch (scrollState){
+        switch (scrollState) {
             case SCROLL_STATE_FLING:
                 mActionButton.hide();
                 break;
             case SCROLL_STATE_IDLE:
-                if(mFirstVisibleItem == 0){
+                if (mFirstVisibleItem == 0) {
                     mActionButton.hide();
-                }else {
+                } else {
                     mActionButton.show();
                 }
                 break;

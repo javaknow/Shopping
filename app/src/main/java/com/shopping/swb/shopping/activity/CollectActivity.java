@@ -1,27 +1,69 @@
 package com.shopping.swb.shopping.activity;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
-import com.shopping.swb.shopping.constant.DataUrl;
+import com.shopping.swb.shopping.adapter.GoodsAdapter;
+import com.shopping.swb.shopping.db.CollectContract;
+import com.shopping.swb.shopping.db.CollectDBHelper;
+import com.shopping.swb.shopping.db.DBUtil;
+import com.shopping.swb.shopping.entity.Goods;
 
-public class CollectActivity extends BaseActivity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class CollectActivity extends BaseActivity implements AdapterView.OnItemClickListener
+        , View.OnClickListener {
+    public static final int QUERY_ALL_DATA = 0;
+    public static final int QUERY_SUCCESS = 1;
+    public static final int QUEREY_FAILURE = 2;
     private Toolbar mToolbar;
-    private WebView mWebView;
+    private GridView mGridView;
+    private GoodsAdapter mGoodsAdapter;
+    private CollectDBHelper mCollectDBHelper;
+    private DBUtil mDBUtil;
+    private Cursor mCursor;
+    private List<Goods> mGoodsList = new ArrayList<>();
+    private boolean mIsEdit, mIsSelect, mIsAllSelect;
+    private View mSelectAll, mDeleteSelected;
+    private ImageView mSelectAllImage;
+    private View mEditLayout;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case QUERY_ALL_DATA:
+                    mCursor = getInfoFromDB();
+                    break;
+                case QUERY_SUCCESS:
+                    initDatas();
+                    break;
+                case QUEREY_FAILURE:
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collect);
         initView();
+
     }
     private void initView(){
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -33,18 +75,19 @@ public class CollectActivity extends BaseActivity {
                 finish();
             }
         });
-        mWebView = (WebView) findViewById(R.id.goods_webview);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl(DataUrl.PREFIX_ORDER);
-        // 在WebView中打开链接（默认行为是使用浏览器，设置此项后都用WebView打开）
-        mWebView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
+        mGridView = (GridView) findViewById(R.id.gridview);
+        mGridView.setOnItemClickListener(this);
+        mCollectDBHelper = new CollectDBHelper(this);
+        mDBUtil = DBUtil.getInstance(mCollectDBHelper);
+        mGoodsAdapter = new GoodsAdapter(this, mGoodsList);
+        mGridView.setAdapter(mGoodsAdapter);
+        mHandler.sendEmptyMessage(QUERY_ALL_DATA);
+        mSelectAll = findViewById(R.id.select_all);
+        mDeleteSelected = findViewById(R.id.delete_selected);
+        mSelectAll.setOnClickListener(this);
+        mDeleteSelected.setOnClickListener(this);
+        mSelectAllImage = (ImageView) findViewById(R.id.select);
+        mEditLayout = findViewById(R.id.edit_layout);
     }
 
     @Override
@@ -62,29 +105,118 @@ public class CollectActivity extends BaseActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_edit) {
+            if (mGoodsAdapter.getCount() != 0) {
+                mIsEdit = !mIsEdit;
+                mGoodsAdapter.setShow(mIsEdit);
+                mGoodsAdapter.notifyDataSetChanged();
+                showEditLayout(mIsEdit);
+            } else {
+                Toast.makeText(this, R.string.no_collect, Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * 按键响应，在WebView中查看网页时，按返回键的时候按浏览历史退回,如果不做此项处理则整个WebView返回退出
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        // Check if the key event was the Back button and if there's history
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack())
-        {
-            // 返回键退回
-            mWebView.goBack();
-            return true;
+    private void showEditLayout(boolean isShow) {
+        if (isShow) {
+            mEditLayout.setVisibility(View.VISIBLE);
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.umeng_socialize_slide_in_from_bottom);
+            mEditLayout.startAnimation(animation);
+        } else {
+            mEditLayout.setVisibility(View.GONE);
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.umeng_socialize_slide_out_from_bottom);
+            mEditLayout.startAnimation(animation);
         }
-        // If it wasn't the Back key or there's no web page history, bubble up
-        // to the default
-        // system behavior (probably exit the activity)
-        return super.onKeyDown(keyCode, event);
+    }
+
+    private Cursor getInfoFromDB() {
+        Cursor cursor = null;
+        try {
+            cursor = mDBUtil.query("select * from "
+                    + CollectContract.CollectEntry.DATABASE_TABLE_COLLECT, null);
+            mHandler.sendEmptyMessage(QUERY_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cursor;
+    }
+
+    private void initDatas() {
+        for (int i = 0; i < mCursor.getCount(); i++) {
+            mCursor.moveToPosition(i);
+            Goods goods = new Goods();
+            goods.setItem_id(mCursor.getString(mCursor.getColumnIndex(CollectContract.CollectEntry.COLUMNS_NUM_ID)));
+            goods.setTitle(mCursor.getString(mCursor.getColumnIndex(CollectContract.CollectEntry.COLUMNS_TITLE)));
+            goods.setPrice(mCursor.getDouble(mCursor.getColumnIndex(CollectContract.CollectEntry.COLUMNS_ORIGIN_PRICE)));
+            goods.setPrice_with_rate(mCursor.getDouble(mCursor.getColumnIndex(CollectContract.CollectEntry.COLUMNS_NOW_PRICE)));
+            goods.setDiscount(mCursor.getDouble(mCursor.getColumnIndex(CollectContract.CollectEntry.COLUMNS_DISCOUNT)));
+            goods.setSold(mCursor.getString(mCursor.getColumnIndex(CollectContract.CollectEntry.COLUMNS_SOLD)));
+            goods.setPic_path(mCursor.getString(mCursor.getColumnIndex(CollectContract.CollectEntry.COLUMNS_PIC_URL)));
+            mGoodsList.add(goods);
+        }
+        mGoodsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mGoodsList.clear();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (!mIsEdit) {
+            Intent intent = new Intent(this, GoodsDetailActivity.class);
+            intent.putExtra("id", mGoodsList.get(position).getItem_id());
+            startActivity(intent);
+        } else {
+            mIsSelect = !mIsSelect;
+            mGoodsList.get(position).setSelect(mIsSelect);
+            mGoodsAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.select_all:
+                if (!mIsAllSelect) {
+                    mSelectAllImage.setImageResource(R.drawable.icon_selected);
+                    mIsAllSelect = true;
+                } else {
+                    mSelectAllImage.setImageResource(R.drawable.icon_unselect);
+                    mIsAllSelect = false;
+                }
+                for (int i = 0; i < mGoodsList.size(); i++) {
+                    mGoodsList.get(i).setSelect(mIsAllSelect);
+                }
+                mGoodsAdapter.notifyDataSetChanged();
+                break;
+            case R.id.delete_selected:
+                if (mGoodsAdapter.getCount() != 0) {
+                    for (int i = 0; i < mGoodsList.size(); i++) {
+                        if (mGoodsList.get(i).isSelect()) {
+                            mDBUtil.delete(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT,
+                                    CollectContract.CollectEntry.COLUMNS_NUM_ID +
+                                            "=?",
+                                    new String[]{mGoodsList.get(i).getItem_id()});
+                            mGoodsList.remove(i);
+                        }
+                    }
+                    mGoodsAdapter.notifyDataSetChanged();
+                } else {
+                    showEditLayout(false);
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mHandler.removeCallbacksAndMessages(null);
     }
 }

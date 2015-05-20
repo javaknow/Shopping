@@ -175,6 +175,12 @@ public class AllManagerFragment extends BaseFragment implements PullToRefreshBas
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
         intent.putExtra("id",mGoodsList.get(position).getNum_iid());
+        intent.putExtra("title", mGoodsList.get(position).getTitle());
+        intent.putExtra("origin_price", mGoodsList.get(position).getOrigin_price());
+        intent.putExtra("now_price", mGoodsList.get(position).getNow_price());
+        intent.putExtra("discount", mGoodsList.get(position).getDiscount());
+        intent.putExtra("sold", mGoodsList.get(position).getDeal_num());
+        intent.putExtra("pic_url", mGoodsList.get(position).getPic_url());
         startActivity(intent);
     }
 

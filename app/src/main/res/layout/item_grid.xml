@@ -8,12 +8,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/item_bg">
-     <ImageView
-         android:id="@+id/image"
-         android:layout_width="match_parent"
-         android:layout_height="180dp"
-         android:scaleType="fitXY"/>
-     <TextView
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="fitXY"/>
+
+            <ImageView
+                android:id="@+id/select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_unselect"
+                android:layout_alignParentRight="true"
+                android:layout_margin="3dp"
+                android:visibility="invisible"/>
+        </RelativeLayout>
+
+        <TextView
          android:id="@+id/title"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"

@@ -37,10 +37,10 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 
 public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2
-            ,AdapterView.OnItemClickListener,View.OnClickListener,AbsListView.OnScrollListener{
+        , AdapterView.OnItemClickListener, View.OnClickListener, AbsListView.OnScrollListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-   // private static final String ARG_PARAM2 = "param2";
+    // private static final String ARG_PARAM2 = "param2";
 
     private String mUrl;
     private String mTag;
@@ -60,7 +60,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
         GoodsFragment fragment = new GoodsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, url);
-     //   args.putString(ARG_PARAM2, tag);
+        //   args.putString(ARG_PARAM2, tag);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +74,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mUrl = getArguments().getString(ARG_PARAM1);
-      //      mTag = getArguments().getString(ARG_PARAM2);
+            //      mTag = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -98,22 +98,22 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGoodsAdapter = new GoodsAdapter(mActivity,mGoodsList);
+        mGoodsAdapter = new GoodsAdapter(mActivity, mGoodsList);
         mGridView.setAdapter(mGoodsAdapter);
-        if(mGoodsAdapter.getCount()!=0){
+        if (mGoodsAdapter.getCount() != 0) {
             mProgressBar.setVisibility(View.GONE);
-        }else {
+        } else {
             mHandler.sendEmptyMessage(MSG_REQUEST_INFO);
         }
     }
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case MSG_REQUEST_INFO:
-                  //  mProgressBar.setVisibility(View.VISIBLE);
+                    //  mProgressBar.setVisibility(View.VISIBLE);
                     getInfoFromServer();
                     break;
                 case MSG_SUCCESS:
@@ -123,7 +123,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
                     break;
                 case MSG_FAILURE:
                     mProgressBar.setVisibility(View.GONE);
-                    if(mGoodsAdapter.getCount()==0){
+                    if (mGoodsAdapter.getCount() == 0) {
                         mImageView.setVisibility(View.VISIBLE);
                     }
                     mGridView.onRefreshComplete();
@@ -131,16 +131,17 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
             }
         }
     };
-    private void getInfoFromServer(){
-        if(mAsyncHttpClient == null){
+
+    private void getInfoFromServer() {
+        if (mAsyncHttpClient == null) {
             mAsyncHttpClient = new AsyncHttpClient();
         }
         mAsyncHttpClient.setTimeout(8000);
-        mAsyncHttpClient.get(mUrl,new AsyncHttpResponseHandler() {
+        mAsyncHttpClient.get(mUrl, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                String json = new String(bytes,0,bytes.length);
-                mHandler.sendMessage(mHandler.obtainMessage(MSG_SUCCESS,json));
+                String json = new String(bytes, 0, bytes.length);
+                mHandler.sendMessage(mHandler.obtainMessage(MSG_SUCCESS, json));
             }
 
             @Override
@@ -149,14 +150,15 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
             }
         });
     }
-    private void initGoods(String json){
+
+    private void initGoods(String json) {
         try {
             GoodsList goodsList = Utility.getGoods(json, GoodsList.class);
             mGoodsList.clear();
             mGoodsList.addAll(goodsList.getList());
             mGoodsAdapter.notifyDataSetChanged();
             mGridView.onRefreshComplete();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             mHandler.sendEmptyMessage(MSG_FAILURE);
         }
@@ -184,7 +186,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mGoodsList!=null){
+        if (mGoodsList != null) {
             mGoodsList.clear();
         }
     }
@@ -206,13 +208,19 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
-        intent.putExtra("id",mGoodsList.get(position).getItem_id());
+        intent.putExtra("id", mGoodsList.get(position).getItem_id());
+        intent.putExtra("title", mGoodsList.get(position).getTitle());
+        intent.putExtra("origin_price", mGoodsList.get(position).getPrice_with_rate());
+        intent.putExtra("now_price", mGoodsList.get(position).getPrice());
+        intent.putExtra("discount", mGoodsList.get(position).getDiscount());
+        intent.putExtra("sold", mGoodsList.get(position).getSold());
+        intent.putExtra("pic_url", mGoodsList.get(position).getPic_path());
         startActivity(intent);
     }
 
     @Override
     public void onClick(View v) {
-        if(mGoodsAdapter!=null){
+        if (mGoodsAdapter != null) {
             mGridView.setAdapter(mGoodsAdapter);
             mActionButton.hide();
         }
@@ -220,14 +228,14 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        switch (scrollState){
+        switch (scrollState) {
             case SCROLL_STATE_FLING:
                 mActionButton.hide();
                 break;
             case SCROLL_STATE_IDLE:
-                if(mFirstVisibleItem == 0){
+                if (mFirstVisibleItem == 0) {
                     mActionButton.hide();
-                }else {
+                } else {
                     mActionButton.show();
                 }
                 break;

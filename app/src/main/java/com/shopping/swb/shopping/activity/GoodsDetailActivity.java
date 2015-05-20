@@ -1,5 +1,7 @@
 package com.shopping.swb.shopping.activity;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,24 +13,42 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.constant.DataUrl;
+import com.shopping.swb.shopping.db.CollectContract;
+import com.shopping.swb.shopping.db.CollectDBHelper;
+import com.shopping.swb.shopping.db.DBUtil;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 public class GoodsDetailActivity extends ActionBarActivity {
     private Toolbar mToolbar;
     private String mGoodsId;
+    private String mTitle;
+    private double mNowPrice;
+    private double mOriginPrice;
+    private double mDiscount;
+    private String mSold;
+    private String mPicUrl;
     private WebView mWebView;
     private CircularProgressBar mLoding;
+    private MenuItem mCollect;
+    private DBUtil mDBUtil;
+    private CollectDBHelper mCollectDBHelper;
+    private Cursor mCursor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
         mGoodsId = getIntent().getStringExtra("id");
+        mTitle = getIntent().getStringExtra("title");
+        mNowPrice = getIntent().getDoubleExtra("now_price", -1);
+        mOriginPrice = getIntent().getDoubleExtra("origin_price", -1);
+        mDiscount = getIntent().getDoubleExtra("discount", -1);
+        mSold = getIntent().getStringExtra("sold");
+        mPicUrl = getIntent().getStringExtra("pic_url");
         initView();
     }
     private void initView(){
@@ -65,12 +85,19 @@ public class GoodsDetailActivity extends ActionBarActivity {
                 super.onPageFinished(view, url);
             }
         });
+        mCollectDBHelper = new CollectDBHelper(this);
+        mDBUtil = DBUtil.getInstance(mCollectDBHelper);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_goods_detail, menu);
+        mCollect = menu.findItem(R.id.action_collect);
+        mCursor = query();
+        if (mCursor.getCount() != 0) {
+            mCollect.setIcon(R.drawable.icon_collected);
+        }
         return true;
     }
 
@@ -82,13 +109,46 @@ public class GoodsDetailActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_collect) {
+            mCursor = query();
+            ContentValues values = new ContentValues();
+            values.put(CollectContract.CollectEntry.COLUMNS_NUM_ID, mGoodsId);
+            values.put(CollectContract.CollectEntry.COLUMNS_TITLE, mTitle);
+            values.put(CollectContract.CollectEntry.COLUMNS_NOW_PRICE, mNowPrice);
+            values.put(CollectContract.CollectEntry.COLUMNS_ORIGIN_PRICE, mOriginPrice);
+            values.put(CollectContract.CollectEntry.COLUMNS_DISCOUNT, mDiscount);
+            values.put(CollectContract.CollectEntry.COLUMNS_SOLD, mSold);
+            values.put(CollectContract.CollectEntry.COLUMNS_PIC_URL, mPicUrl);
+            if (mCursor.getCount() == 0) {
+                if (mDBUtil.insert(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT, null, values)
+                        > 0) {
+                    Toast.makeText(this, R.string.collect_success, Toast.LENGTH_SHORT).show();
+                    mCollect.setIcon(R.drawable.icon_collected);
+                } else {
+                    Toast.makeText(this, R.string.collect_fail, Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, R.string.collected, Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private Cursor query() {
+        Cursor cursor = null;
+        try {
+            cursor = mDBUtil.query("select * from "
+                    + CollectContract.CollectEntry.DATABASE_TABLE_COLLECT
+                    + " where "
+                    + CollectContract.CollectEntry.COLUMNS_NUM_ID
+                    + "=?", new String[]{mGoodsId});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cursor;
+    }
     /**
      * 按键响应，在WebView中查看网页时，按返回键的时候按浏览历史退回,如果不做此项处理则整个WebView返回退出
      */

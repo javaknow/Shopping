@@ -2,6 +2,8 @@
 <resources>
 
     <string name="action_settings">设置</string>
+    <string name="action_collect">收藏</string>
+    <string name="action_edit">编辑</string>
     <string name="action_share">分享</string>
     <string name="action_search">搜索</string>
     <string name="drawer_open">打开</string>
@@ -75,5 +77,10 @@
     <string name="clear_cache_success_hint">清除缓存成功!</string>
     <string name="title_activity_welcom">WelcomActivity</string>
     <string name="shewenbiao_gmail">shewenbiao@gmail.com</string>
-
+    <string name="collect_success">收藏成功！</string>
+    <string name="collect_fail">收藏失败！</string>
+    <string name="collected">已收藏，请不要重复收藏！</string>
+    <string name="select_all">全部选中</string>
+    <string name="delete_selected">删除选中项</string>
+    <string name="no_collect">亲，您还没有收藏过商品，赶紧去收藏！</string>
 </resources>

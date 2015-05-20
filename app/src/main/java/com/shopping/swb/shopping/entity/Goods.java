@@ -7,6 +7,16 @@ package com.shopping.swb.shopping.entity;
  * Time: 14:50
  */
 public class Goods {
+    private boolean isSelect;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean isSelect) {
+        this.isSelect = isSelect;
+    }
+
     private String title;
     private String sold;
     private String pic_path;
