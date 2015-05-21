@@ -210,8 +210,8 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
         Intent intent = new Intent(mActivity, GoodsDetailActivity.class);
         intent.putExtra("id", mGoodsList.get(position).getItem_id());
         intent.putExtra("title", mGoodsList.get(position).getTitle());
-        intent.putExtra("origin_price", mGoodsList.get(position).getPrice_with_rate());
-        intent.putExtra("now_price", mGoodsList.get(position).getPrice());
+        intent.putExtra("origin_price", mGoodsList.get(position).getPrice());
+        intent.putExtra("now_price", mGoodsList.get(position).getPrice_with_rate());
         intent.putExtra("discount", mGoodsList.get(position).getDiscount());
         intent.putExtra("sold", mGoodsList.get(position).getSold());
         intent.putExtra("pic_url", mGoodsList.get(position).getPic_path());

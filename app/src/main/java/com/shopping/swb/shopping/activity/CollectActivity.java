@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
@@ -39,8 +41,9 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
     private Cursor mCursor;
     private List<Goods> mGoodsList = new ArrayList<>();
     private boolean mIsEdit, mIsSelect, mIsAllSelect;
-    private View mSelectAll, mDeleteSelected;
+    private View mSelectAll, mDeleteSelected, mCancelEdit;
     private ImageView mSelectAllImage;
+    private TextView mSelectText;
     private View mEditLayout;
     private Handler mHandler = new Handler() {
         @Override
@@ -58,6 +61,7 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +69,8 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
         initView();
 
     }
-    private void initView(){
+
+    private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
@@ -84,9 +89,12 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
         mHandler.sendEmptyMessage(QUERY_ALL_DATA);
         mSelectAll = findViewById(R.id.select_all);
         mDeleteSelected = findViewById(R.id.delete_selected);
+        mCancelEdit = findViewById(R.id.cancel_edit);
         mSelectAll.setOnClickListener(this);
         mDeleteSelected.setOnClickListener(this);
+        mCancelEdit.setOnClickListener(this);
         mSelectAllImage = (ImageView) findViewById(R.id.select);
+        mSelectText = (TextView) findViewById(R.id.select_text);
         mEditLayout = findViewById(R.id.edit_layout);
     }
 
@@ -107,10 +115,12 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit) {
             if (mGoodsAdapter.getCount() != 0) {
-                mIsEdit = !mIsEdit;
-                mGoodsAdapter.setShow(mIsEdit);
-                mGoodsAdapter.notifyDataSetChanged();
-                showEditLayout(mIsEdit);
+                if (!mIsEdit) {
+                    mIsEdit = true;
+                    mGoodsAdapter.setShow(mIsEdit);
+                    mGoodsAdapter.notifyDataSetChanged();
+                    showEditLayout(mIsEdit);
+                }
             } else {
                 Toast.makeText(this, R.string.no_collect, Toast.LENGTH_SHORT).show();
             }
@@ -183,40 +193,68 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.select_all:
-                if (!mIsAllSelect) {
-                    mSelectAllImage.setImageResource(R.drawable.icon_selected);
-                    mIsAllSelect = true;
-                } else {
-                    mSelectAllImage.setImageResource(R.drawable.icon_unselect);
-                    mIsAllSelect = false;
-                }
+                mIsAllSelect = !mIsAllSelect;
+                setSelectAll(mIsAllSelect);
                 for (int i = 0; i < mGoodsList.size(); i++) {
                     mGoodsList.get(i).setSelect(mIsAllSelect);
                 }
                 mGoodsAdapter.notifyDataSetChanged();
                 break;
             case R.id.delete_selected:
-                if (mGoodsAdapter.getCount() != 0) {
-                    for (int i = 0; i < mGoodsList.size(); i++) {
-                        if (mGoodsList.get(i).isSelect()) {
-                            mDBUtil.delete(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT,
-                                    CollectContract.CollectEntry.COLUMNS_NUM_ID +
-                                            "=?",
-                                    new String[]{mGoodsList.get(i).getItem_id()});
-                            mGoodsList.remove(i);
-                        }
+                List<Goods> selects = new ArrayList<>();
+                for (int i = 0; i < mGoodsList.size(); i++) {
+                    if (mGoodsList.get(i).isSelect()) {
+                        selects.add(mGoodsList.get(i));
                     }
-                    mGoodsAdapter.notifyDataSetChanged();
-                } else {
+                }
+                mGoodsList.removeAll(selects);
+                mGoodsAdapter.notifyDataSetChanged();
+                for (int i = 0; i < selects.size(); i++) {
+                    mDBUtil.delete(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT,
+                            CollectContract.CollectEntry.COLUMNS_NUM_ID +
+                                    "=?",
+                            new String[]{selects.get(i).getItem_id()});
+                }
+                if (mGoodsAdapter.getCount() == 0) {
                     showEditLayout(false);
                 }
+                break;
+            case R.id.cancel_edit:
+                mIsEdit = false;
+                mGoodsAdapter.setShow(mIsEdit);
+                mGoodsAdapter.notifyDataSetChanged();
+                showEditLayout(mIsEdit);
+                setSelectAll(false);
                 break;
         }
     }
 
+    private void setSelectAll(boolean isSelectAll) {
+        if (isSelectAll) {
+            mSelectAllImage.setImageResource(R.drawable.icon_selected);
+            mSelectText.setText(R.string.cancel_select_all);
+        } else {
+            mSelectAllImage.setImageResource(R.drawable.icon_unselect);
+            mSelectText.setText(R.string.select_all);
+        }
+    }
     @Override
     protected void onStop() {
         super.onStop();
         mHandler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && View.VISIBLE == mEditLayout.getVisibility()) {
+            showEditLayout(false);
+            mGoodsAdapter.setShow(false);
+            mGoodsAdapter.notifyDataSetChanged();
+            setSelectAll(false);
+            mIsEdit = false;
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
