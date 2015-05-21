@@ -63,8 +63,12 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
                 case QUEREY_FAILURE:
                     break;
                 case COUNT_SELECTED:
-                    mCustomTitle.setVisibility(View.VISIBLE);
-                    ((TextView) mCustomTitle).setText("已选中" + mCount + "项");
+                    if (mGoodsAdapter.getCount() != 0) {
+                        mCustomTitle.setVisibility(View.VISIBLE);
+                        ((TextView) mCustomTitle).setText("已选中" + mCount + "项");
+                    } else {
+                        mCustomTitle.setVisibility(View.INVISIBLE);
+                    }
                     if (mCount == mGoodsList.size()) {
                         setSelectAll(true);
                         mIsAllSelect = true;
@@ -243,7 +247,7 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
                 if (!selects.isEmpty()) {
                     mGoodsList.removeAll(selects);
                     mGoodsAdapter.notifyDataSetChanged();
-                    mCount -= selects.size();
+                    mCount = 0;
                     mHandler.sendEmptyMessage(COUNT_SELECTED);
                     for (int i = 0; i < selects.size(); i++) {
                         mDBUtil.delete(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT,
