@@ -5,8 +5,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +36,7 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
     public static final int QUERY_ALL_DATA = 0;
     public static final int QUERY_SUCCESS = 1;
     public static final int QUEREY_FAILURE = 2;
+    public static final int COUNT_SELECTED = 3;
     private Toolbar mToolbar;
     private GridView mGridView;
     private GoodsAdapter mGoodsAdapter;
@@ -40,11 +44,11 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
     private DBUtil mDBUtil;
     private Cursor mCursor;
     private List<Goods> mGoodsList = new ArrayList<>();
-    private boolean mIsEdit, mIsSelect, mIsAllSelect;
+    private boolean mIsEdit, mIsAllSelect;
     private View mSelectAll, mDeleteSelected, mCancelEdit;
     private ImageView mSelectAllImage;
-    private TextView mSelectText;
-    private View mEditLayout;
+    private View mEditLayout, mCustomTitle;
+    private int mCount = 0;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -57,6 +61,17 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
                     initDatas();
                     break;
                 case QUEREY_FAILURE:
+                    break;
+                case COUNT_SELECTED:
+                    mCustomTitle.setVisibility(View.VISIBLE);
+                    ((TextView) mCustomTitle).setText("已选中" + mCount + "项");
+                    if (mCount == mGoodsList.size()) {
+                        setSelectAll(true);
+                        mIsAllSelect = true;
+                    } else {
+                        setSelectAll(false);
+                        mIsAllSelect = false;
+                    }
                     break;
             }
         }
@@ -94,8 +109,11 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
         mDeleteSelected.setOnClickListener(this);
         mCancelEdit.setOnClickListener(this);
         mSelectAllImage = (ImageView) findViewById(R.id.select);
-        mSelectText = (TextView) findViewById(R.id.select_text);
         mEditLayout = findViewById(R.id.edit_layout);
+        mCustomTitle = LayoutInflater.from(this).inflate(R.layout.actionbar_custom_title_layout, null);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(Gravity.CENTER);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(mCustomTitle, layoutParams);
     }
 
     @Override
@@ -120,6 +138,8 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
                     mGoodsAdapter.setShow(mIsEdit);
                     mGoodsAdapter.notifyDataSetChanged();
                     showEditLayout(mIsEdit);
+                    mCount = 0;
+                    mHandler.sendEmptyMessage(COUNT_SELECTED);
                 }
             } else {
                 Toast.makeText(this, R.string.no_collect, Toast.LENGTH_SHORT).show();
@@ -183,9 +203,16 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
             intent.putExtra("id", mGoodsList.get(position).getItem_id());
             startActivity(intent);
         } else {
-            mIsSelect = !mIsSelect;
-            mGoodsList.get(position).setSelect(mIsSelect);
+            boolean isSelect = mGoodsList.get(position).isSelect();
+            if (!isSelect) {
+                mGoodsList.get(position).setSelect(true);
+                mCount++;
+            } else {
+                mGoodsList.get(position).setSelect(false);
+                mCount--;
+            }
             mGoodsAdapter.notifyDataSetChanged();
+            mHandler.sendEmptyMessage(COUNT_SELECTED);
         }
     }
 
@@ -195,6 +222,12 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
             case R.id.select_all:
                 mIsAllSelect = !mIsAllSelect;
                 setSelectAll(mIsAllSelect);
+                if (mIsAllSelect) {
+                    mCount = mGoodsList.size();
+                } else {
+                    mCount = 0;
+                }
+                mHandler.sendEmptyMessage(COUNT_SELECTED);
                 for (int i = 0; i < mGoodsList.size(); i++) {
                     mGoodsList.get(i).setSelect(mIsAllSelect);
                 }
@@ -207,13 +240,17 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
                         selects.add(mGoodsList.get(i));
                     }
                 }
-                mGoodsList.removeAll(selects);
-                mGoodsAdapter.notifyDataSetChanged();
-                for (int i = 0; i < selects.size(); i++) {
-                    mDBUtil.delete(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT,
-                            CollectContract.CollectEntry.COLUMNS_NUM_ID +
-                                    "=?",
-                            new String[]{selects.get(i).getItem_id()});
+                if (!selects.isEmpty()) {
+                    mGoodsList.removeAll(selects);
+                    mGoodsAdapter.notifyDataSetChanged();
+                    mCount -= selects.size();
+                    mHandler.sendEmptyMessage(COUNT_SELECTED);
+                    for (int i = 0; i < selects.size(); i++) {
+                        mDBUtil.delete(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT,
+                                CollectContract.CollectEntry.COLUMNS_NUM_ID +
+                                        "=?",
+                                new String[]{selects.get(i).getItem_id()});
+                    }
                 }
                 if (mGoodsAdapter.getCount() == 0) {
                     showEditLayout(false);
@@ -225,6 +262,7 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
                 mGoodsAdapter.notifyDataSetChanged();
                 showEditLayout(mIsEdit);
                 setSelectAll(false);
+                mCustomTitle.setVisibility(View.INVISIBLE);
                 break;
         }
     }
@@ -232,10 +270,8 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
     private void setSelectAll(boolean isSelectAll) {
         if (isSelectAll) {
             mSelectAllImage.setImageResource(R.drawable.icon_selected);
-            mSelectText.setText(R.string.cancel_select_all);
         } else {
             mSelectAllImage.setImageResource(R.drawable.icon_unselect);
-            mSelectText.setText(R.string.select_all);
         }
     }
     @Override
@@ -253,6 +289,7 @@ public class CollectActivity extends BaseActivity implements AdapterView.OnItemC
             mGoodsAdapter.notifyDataSetChanged();
             setSelectAll(false);
             mIsEdit = false;
+            mCustomTitle.setVisibility(View.INVISIBLE);
             return true;
         }
         return super.onKeyDown(keyCode, event);

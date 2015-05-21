@@ -65,7 +65,7 @@
     <string name="title_activity_order">我的订单</string>
     <string name="title_activity_logistics">我的物流</string>
     <string name="title_activity_cart">我的购物车</string>
-    <string name="title_activity_collect">我的收藏</string>
+    <string name="title_activity_collect">收藏</string>
     <string name="title_activity_about">关于我们</string>
     <string name="summary">"    天天购主要经营男装，女装，数码，家居，母婴，鞋包，美妆，美食，美容护肤各大品牌类商品，更有全场九块九超值商品。每天上新，定有你所爱。天天购精心挑选商品，比一比价格，我们都是最优惠的。"</string>
     <string name="version_summary">天天购V</string>
