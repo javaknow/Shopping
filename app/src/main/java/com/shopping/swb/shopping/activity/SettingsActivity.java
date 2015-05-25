@@ -19,6 +19,11 @@ import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.fragment.FeedbackFragment;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
+import com.umeng.update.UmengDownloadListener;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener{
     private Toolbar mToolbar;
@@ -85,7 +90,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         int id = v.getId();
         switch (id){
             case R.id.check_update:
-                Toast.makeText(this,R.string.check_update_hint,Toast.LENGTH_SHORT).show();
+                updateApp();
                 break;
             case R.id.clear_cache:
                 new AlertDialog.Builder(this)
@@ -121,5 +126,50 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
         }
+    }
+
+    private void updateApp() {
+        UmengUpdateAgent.setUpdateCheckConfig(false);
+        //      UmengUpdateAgent.forceUpdate(this);
+//        UmengUpdateAgent.setDownloadListener(new UmengDownloadListener(){
+//
+//            @Override
+//            public void OnDownloadStart() {
+//                Toast.makeText(SettingsActivity.this, R.string.download_start , Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void OnDownloadUpdate(int progress) {
+//                Toast.makeText(SettingsActivity.this, R.string.download_progress + progress + "%" , Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void OnDownloadEnd(int result, String file) {
+//                //Toast.makeText(mContext, "download result : " + result , Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SettingsActivity.this, R.string.download_file_path + file , Toast.LENGTH_SHORT).show();
+//            }
+//        });
+        UmengUpdateAgent.setUpdateAutoPopup(false);
+        UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+            @Override
+            public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
+                switch (updateStatus) {
+                    case UpdateStatus.Yes: // has update
+                        UmengUpdateAgent.showUpdateDialog(SettingsActivity.this, updateInfo);
+                        break;
+                    case UpdateStatus.No: // has no update
+                        Toast.makeText(SettingsActivity.this, R.string.check_update_hint, Toast.LENGTH_SHORT).show();
+                        break;
+//                    case UpdateStatus.NoneWifi: // none wifi
+//                        Toast.makeText(SettingsActivity.this, "没有wifi连接， 只在wifi下更新", Toast.LENGTH_SHORT).show();
+//                        break;
+                    case UpdateStatus.Timeout: // time out
+                        Toast.makeText(SettingsActivity.this, R.string.connect_time_out, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+        //     UmengUpdateAgent.update(this);
+        UmengUpdateAgent.forceUpdate(this);
     }
 }
