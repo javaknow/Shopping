@@ -92,7 +92,7 @@
     <string name="feedback_content_hint">您的宝贵意见是我们的动力！</string>
     <string name="contact">联系方式:</string>
     <string name="commit">提交</string>
-    <string name="contact_hint">QQ、邮箱、电话等联系方式</string>
+    <string name="contact_hint">联系方式有利于我们与您联系！</string>
     <string name="feedback_content_not_null">请填写您的宝贵意见！</string>
     <string name="commit_success">提交成功！</string>
 </resources>

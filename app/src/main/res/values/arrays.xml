@@ -88,4 +88,10 @@
         <item>0xff1ec52b</item>
         <item>0xffff0000</item>
     </integer-array>
+    <string-array name="contact_type">
+        <item>QQ</item>
+        <item>邮箱</item>
+        <item>电话</item>
+        <item>其他</item>
+    </string-array>
 </resources>

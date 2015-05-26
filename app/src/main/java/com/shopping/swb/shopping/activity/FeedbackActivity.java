@@ -6,8 +6,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
@@ -24,13 +27,17 @@ import java.util.List;
 import java.util.Map;
 
 public class FeedbackActivity extends BaseActivity implements View.OnClickListener
-        , SyncListener {
+        , SyncListener, AdapterView.OnItemSelectedListener {
     private Toolbar mToolbar;
     private FeedbackFragment mFeedbackFragment;
     private EditText mContent, mContact;
     private Button mCommit;
     private FeedbackAgent mFeedbackAgent;
     private Conversation mConversation;
+    private Spinner mContactType;
+    private String[] mTypes;
+    private String mType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +51,7 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
         com.umeng.fb.util.Log.LOG = true;
     }
 
-    private void initView(){
+    private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
@@ -59,7 +66,14 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
         mCommit = (Button) findViewById(R.id.commit);
         mCommit.setOnClickListener(this);
         mFeedbackAgent = UMUtil.feedback(this);
+        mContactType = (Spinner) findViewById(R.id.contact_type);
+        mTypes = getResources().getStringArray(R.array.contact_type);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mTypes);
+        mContactType.setAdapter(adapter);
+        mType = mTypes[0];
+        mContactType.setOnItemSelectedListener(this);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -111,7 +125,7 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
             if (map == null) {
                 map = new HashMap<>();
             }
-            map.put("plain", contact);
+            map.put(mType, contact);
             userInfo.setContact(map);
             mFeedbackAgent.setUserInfo(userInfo);//保存联系方式
             mConversation = mFeedbackAgent.getDefaultConversation();
@@ -130,5 +144,15 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
         mContent.setText("");
         mContact.setText("");
         Toast.makeText(this, R.string.commit_success, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        mType = mTypes[position];
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
