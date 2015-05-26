@@ -100,7 +100,8 @@ public class UMUtil {
         yxCircleHandler.setToCircle(true);
         yxCircleHandler.addToSocialSDK();
     }
-    public static void shareToLW(Context context){
+
+    public static void shareToLW(Context context) {
         //添加来往
         UMLWHandler umlwHandler = new UMLWHandler(context, "laiwangd497e70d4", "d497e70d4c3e4efeab1381476bac4c5e");
         umlwHandler.addToSocialSDK();
@@ -110,7 +111,8 @@ public class UMUtil {
         umlwDynamicHandler.setToCircle(true);
         umlwDynamicHandler.addToSocialSDK();
     }
-    public static QQShareContent setQQShareContent(Context context){
+
+    public static QQShareContent setQQShareContent(Context context) {
         QQShareContent qqShareContent = new QQShareContent();
 //设置分享文字
         qqShareContent.setShareContent(context.getString(R.string.share_content));
@@ -122,7 +124,8 @@ public class UMUtil {
         qqShareContent.setTargetUrl(context.getString(R.string.share_url));
         return qqShareContent;
     }
-    public static QZoneShareContent setQZoneShareContent(Context context){
+
+    public static QZoneShareContent setQZoneShareContent(Context context) {
         QZoneShareContent qzoneContent = new QZoneShareContent();
 //设置分享文字
         qzoneContent.setShareContent(context.getString(R.string.share_content));
@@ -135,36 +138,40 @@ public class UMUtil {
         return qzoneContent;
     }
 
-    public static SinaShareContent setSinaShareContent(Context context){
+    public static SinaShareContent setSinaShareContent(Context context) {
         SinaShareContent sinaShareContent = new SinaShareContent();
         sinaShareContent.setTitle(context.getResources().getString(R.string.app_name));
-        sinaShareContent.setShareContent(context.getString(R.string.share_content)+context.getString(R.string.share_url));
+        sinaShareContent.setShareContent(context.getString(R.string.share_content) + context.getString(R.string.share_url));
         sinaShareContent.setTargetUrl(context.getString(R.string.share_url));
         return sinaShareContent;
     }
-    public static RenrenShareContent setRenrenShareContent(Context context){
+
+    public static RenrenShareContent setRenrenShareContent(Context context) {
         RenrenShareContent renrenShareContent = new RenrenShareContent();
         renrenShareContent.setTitle(context.getResources().getString(R.string.app_name));
-        renrenShareContent.setShareContent(context.getString(R.string.share_content)+context.getString(R.string.share_url));
+        renrenShareContent.setShareContent(context.getString(R.string.share_content) + context.getString(R.string.share_url));
         renrenShareContent.setTargetUrl(context.getString(R.string.share_url));
         return renrenShareContent;
     }
-    public static TencentWbShareContent setTencentWBShareContent(Context context){
+
+    public static TencentWbShareContent setTencentWBShareContent(Context context) {
         TencentWbShareContent tencentShareContent = new TencentWbShareContent();
         tencentShareContent.setTitle(context.getResources().getString(R.string.app_name));
-        tencentShareContent.setShareContent(context.getString(R.string.share_content)+context.getString(R.string.share_url));
+        tencentShareContent.setShareContent(context.getString(R.string.share_content) + context.getString(R.string.share_url));
         tencentShareContent.setTargetUrl(context.getString(R.string.share_url));
         return tencentShareContent;
     }
-    public static SmsShareContent setSmsShareContent(Context context){
+
+    public static SmsShareContent setSmsShareContent(Context context) {
         SmsShareContent smsShareContent = new SmsShareContent();
-        smsShareContent.setShareContent(context.getString(R.string.share_content)+context.getString(R.string.share_url));
+        smsShareContent.setShareContent(context.getString(R.string.share_content) + context.getString(R.string.share_url));
         return smsShareContent;
     }
+
     public static UMSocialService share(Activity activity, String content) {
         shareToQQ(activity);
         shareToQQZone(activity);
-   //     shareToWeixin(activity);
+        //     shareToWeixin(activity);
         shareToRenren(activity);
         shareToSina();
         shareToTencent();
@@ -192,9 +199,9 @@ public class UMUtil {
     public static FeedbackAgent feedback(Context context) {
         final FeedbackAgent feedbackAgent = new FeedbackAgent(context);
         feedbackAgent.sync();
-        //    feedbackAgent.openAudioFeedback();
+        //   feedbackAgent.openAudioFeedback();
         feedbackAgent.openFeedbackPush();
-        //    PushAgent.getInstance(context).enable();
+        PushAgent.getInstance(context).enable();
         //fb.setWelcomeInfo();
         //  fb.setWelcomeInfo("Welcome to use umeng feedback app");
 //        FeedbackPush.getInstance(this).init(true);

@@ -121,8 +121,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             case R.id.feedback:
                 //    mFeedbackAgent.startFeedbackActivity();
                 Intent intent = new Intent(this,FeedbackActivity.class);
-                String feedbackId = mFeedbackAgent.getDefaultConversation().getId();
-                intent.putExtra(FeedbackFragment.BUNDLE_KEY_CONVERSATION_ID,feedbackId);
+//                String feedbackId = mFeedbackAgent.getDefaultConversation().getId();
+//                intent.putExtra(FeedbackFragment.BUNDLE_KEY_CONVERSATION_ID,feedbackId);
                 startActivity(intent);
                 break;
         }

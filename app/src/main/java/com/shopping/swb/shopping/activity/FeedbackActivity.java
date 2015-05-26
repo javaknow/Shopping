@@ -6,23 +6,41 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
+import com.shopping.swb.shopping.util.UMUtil;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.fb.SyncListener;
 import com.umeng.fb.fragment.FeedbackFragment;
+import com.umeng.fb.model.Conversation;
+import com.umeng.fb.model.Reply;
+import com.umeng.fb.model.UserInfo;
 
-public class FeedbackActivity extends BaseActivity {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class FeedbackActivity extends BaseActivity implements View.OnClickListener
+        , SyncListener {
     private Toolbar mToolbar;
     private FeedbackFragment mFeedbackFragment;
+    private EditText mContent, mContact;
+    private Button mCommit;
+    private FeedbackAgent mFeedbackAgent;
+    private Conversation mConversation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         initView();
-        String conversation_id = getIntent().getStringExtra(FeedbackFragment.BUNDLE_KEY_CONVERSATION_ID);
-        mFeedbackFragment = FeedbackFragment.newInstance(conversation_id);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, mFeedbackFragment)
-                .commit();
+//        String conversation_id = getIntent().getStringExtra(FeedbackFragment.BUNDLE_KEY_CONVERSATION_ID);
+//        mFeedbackFragment = FeedbackFragment.newInstance(conversation_id);
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.container, mFeedbackFragment)
+//                .commit();
         com.umeng.fb.util.Log.LOG = true;
     }
 
@@ -36,6 +54,11 @@ public class FeedbackActivity extends BaseActivity {
                 finish();
             }
         });
+        mContent = (EditText) findViewById(R.id.content);
+        mContact = (EditText) findViewById(R.id.contact);
+        mCommit = (Button) findViewById(R.id.commit);
+        mCommit.setOnClickListener(this);
+        mFeedbackAgent = UMUtil.feedback(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,6 +85,50 @@ public class FeedbackActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mFeedbackFragment.refresh();
+        //  mFeedbackFragment.refresh();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.commit:
+                setUserInfo();
+                break;
+        }
+    }
+
+    private void setUserInfo() {
+        String content = mContent.getText().toString().trim();
+        String contact = mContact.getText().toString().trim();
+        if ("".equals(content)) {
+            Toast.makeText(this, R.string.feedback_content_not_null, Toast.LENGTH_SHORT).show();
+        } else {
+            UserInfo userInfo = mFeedbackAgent.getUserInfo();
+            if (userInfo == null) {
+                userInfo = new UserInfo();
+            }
+            Map<String, String> map = userInfo.getContact();
+            if (map == null) {
+                map = new HashMap<>();
+            }
+            map.put("plain", contact);
+            userInfo.setContact(map);
+            mFeedbackAgent.setUserInfo(userInfo);//保存联系方式
+            mConversation = mFeedbackAgent.getDefaultConversation();
+            mConversation.addUserReply(content);//用户反馈意见
+            mConversation.sync(this);
+        }
+    }
+
+    @Override
+    public void onReceiveDevReply(List<Reply> replies) {
+
+    }
+
+    @Override
+    public void onSendUserReply(List<Reply> replies) {
+        mContent.setText("");
+        mContact.setText("");
+        Toast.makeText(this, R.string.commit_success, Toast.LENGTH_SHORT).show();
     }
 }
