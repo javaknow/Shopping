@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
@@ -68,7 +69,7 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
         mFeedbackAgent = UMUtil.feedback(this);
         mContactType = (Spinner) findViewById(R.id.contact_type);
         mTypes = getResources().getStringArray(R.array.contact_type);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mTypes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, mTypes);
         mContactType.setAdapter(adapter);
         mType = mTypes[0];
         mContactType.setOnItemSelectedListener(this);
