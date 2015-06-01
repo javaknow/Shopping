@@ -22,8 +22,8 @@
                 android:id="@+id/cart"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
-                <ImageView
+                android:background="@drawable/layout_bg_selector">
+            <ImageView
                     android:id="@+id/image_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,14 +45,14 @@
             </RelativeLayout>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
             <RelativeLayout
                 android:id="@+id/order"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
-                <ImageView
+                android:background="@drawable/layout_bg_selector">
+            <ImageView
                     android:id="@+id/image_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,14 +74,14 @@
             </RelativeLayout>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
             <RelativeLayout
                 android:id="@+id/logistic"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
-                <ImageView
+                android:background="@drawable/layout_bg_selector">
+            <ImageView
                     android:id="@+id/image_logistic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -103,14 +103,14 @@
             </RelativeLayout>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
             <RelativeLayout
                 android:id="@+id/collect"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
-                <ImageView
+                android:background="@drawable/layout_bg_selector">
+            <ImageView
                     android:id="@+id/image_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
             </RelativeLayout>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
         </LinearLayout>
     </ScrollView>

@@ -22,9 +22,9 @@
                 android:id="@+id/message_push"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
+                android:background="@drawable/layout_bg_selector">
 
-                <ImageView
+            <ImageView
                     android:id="@+id/image_push"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -54,16 +54,16 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
 
             <RelativeLayout
                 android:id="@+id/check_update"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
+                android:background="@drawable/layout_bg_selector">
 
-                <ImageView
+            <ImageView
                     android:id="@+id/image_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -88,16 +88,16 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
 
             <RelativeLayout
                 android:id="@+id/clear_cache"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
+                android:background="@drawable/layout_bg_selector">
 
-                <ImageView
+            <ImageView
                     android:id="@+id/image_clear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,16 +122,16 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
 
             <RelativeLayout
                 android:id="@+id/feedback"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
+                android:background="@drawable/layout_bg_selector">
 
-                <ImageView
+            <ImageView
                     android:id="@+id/image_feedback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -156,16 +156,16 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
 
             <RelativeLayout
                 android:id="@+id/about"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                >
+                android:background="@drawable/layout_bg_selector">
 
-                <ImageView
+            <ImageView
                     android:id="@+id/image_about"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.8dp"
                 android:background="@color/divider"/>
         </LinearLayout>
     </ScrollView>
