@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:background="@color/dark_transparent"
+        android:background="@color/divider"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-        <EditText
+        <com.shopping.swb.shopping.view.ClearEditText
             android:id="@+id/edt_search"
             android:layout_width="0dp"
             android:layout_height="35dp"
@@ -24,17 +24,31 @@
             android:drawableLeft="@drawable/ic_search"
             android:background="@drawable/btn_search_bg"
             android:hint="@string/search_goods"
-            android:textColor="@color/category_text_color"/>
-        <TextView
+            android:textColor="@color/category_text_color"
+            android:singleLine="true"
+            android:drawableRight="@drawable/nav_search_del"
+            android:paddingRight="3dp"/>
+        <!--<TextView-->
+        <!--android:id="@+id/tv_search"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/search_button_text"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:textSize="18sp"-->
+        <!--android:textColor="@color/primary_color"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--/>-->
+        <Button
             android:id="@+id/tv_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:text="@string/search_button_text"
             android:layout_alignParentRight="true"
-            android:textSize="18sp"
-            android:textColor="@color/primary_color"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
             android:layout_marginLeft="5dp"
-            />
+            android:gravity="center"
+            android:background="@drawable/btn_bg_selector"/>
     </LinearLayout>
     <TextView
         android:id="@+id/search_history"

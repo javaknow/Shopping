@@ -2,6 +2,8 @@ package com.shopping.swb.shopping.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +23,7 @@ import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.adapter.SearchHistoryAdapter;
 import com.shopping.swb.shopping.constant.AppConstants;
 import com.shopping.swb.shopping.util.Utility;
+import com.shopping.swb.shopping.view.ClearEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +34,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         , AdapterView.OnItemClickListener,SearchHistoryAdapter.SearchHistoryCallback {
     private Toolbar mToolbar;
     private ListView mListView;
-    private EditText mEditText;
-    private TextView mSearch;
+    private ClearEditText mEditText;
+    private Button mSearch;
     private FancyButton mFancyButton;
     private List<String> mHistories = new ArrayList<>();
     private SearchHistoryAdapter mAdapter;
@@ -56,8 +61,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 //  overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
-        mEditText = (EditText) findViewById(R.id.edt_search);
-        mSearch = (TextView) findViewById(R.id.tv_search);
+        mEditText = (ClearEditText) findViewById(R.id.edt_search);
+        mSearch = (Button) findViewById(R.id.tv_search);
         mSearch.setOnClickListener(this);
         mFancyButton = (FancyButton) findViewById(R.id.btn_clear_history);
         mFancyButton.setOnClickListener(this);
