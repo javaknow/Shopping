@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.util.UMUtil;
+import com.shopping.swb.shopping.util.Utility;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.SyncListener;
 import com.umeng.fb.fragment.FeedbackFragment;
@@ -107,7 +108,11 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.commit:
-                setUserInfo();
+                if (Utility.isNetworkAvailable(this)) {
+                    setUserInfo();
+                } else {
+                    Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

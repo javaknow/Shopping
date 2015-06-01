@@ -20,6 +20,7 @@ import com.shopping.swb.shopping.constant.DataUrl;
 import com.shopping.swb.shopping.db.CollectContract;
 import com.shopping.swb.shopping.db.CollectDBHelper;
 import com.shopping.swb.shopping.db.DBUtil;
+import com.shopping.swb.shopping.util.Utility;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
@@ -110,25 +111,29 @@ public class GoodsDetailActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_collect) {
-            mCursor = query();
-            ContentValues values = new ContentValues();
-            values.put(CollectContract.CollectEntry.COLUMNS_NUM_ID, mGoodsId);
-            values.put(CollectContract.CollectEntry.COLUMNS_TITLE, mTitle);
-            values.put(CollectContract.CollectEntry.COLUMNS_NOW_PRICE, mNowPrice);
-            values.put(CollectContract.CollectEntry.COLUMNS_ORIGIN_PRICE, mOriginPrice);
-            values.put(CollectContract.CollectEntry.COLUMNS_DISCOUNT, mDiscount);
-            values.put(CollectContract.CollectEntry.COLUMNS_SOLD, mSold);
-            values.put(CollectContract.CollectEntry.COLUMNS_PIC_URL, mPicUrl);
-            if (mCursor.getCount() == 0) {
-                if (mDBUtil.insert(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT, null, values)
-                        > 0) {
-                    Toast.makeText(this, R.string.collect_success, Toast.LENGTH_SHORT).show();
-                    mCollect.setIcon(R.drawable.icon_collected);
+            if (Utility.isNetworkAvailable(this)) {
+                mCursor = query();
+                ContentValues values = new ContentValues();
+                values.put(CollectContract.CollectEntry.COLUMNS_NUM_ID, mGoodsId);
+                values.put(CollectContract.CollectEntry.COLUMNS_TITLE, mTitle);
+                values.put(CollectContract.CollectEntry.COLUMNS_NOW_PRICE, mNowPrice);
+                values.put(CollectContract.CollectEntry.COLUMNS_ORIGIN_PRICE, mOriginPrice);
+                values.put(CollectContract.CollectEntry.COLUMNS_DISCOUNT, mDiscount);
+                values.put(CollectContract.CollectEntry.COLUMNS_SOLD, mSold);
+                values.put(CollectContract.CollectEntry.COLUMNS_PIC_URL, mPicUrl);
+                if (mCursor.getCount() == 0) {
+                    if (mDBUtil.insert(CollectContract.CollectEntry.DATABASE_TABLE_COLLECT, null, values)
+                            > 0) {
+                        Toast.makeText(this, R.string.collect_success, Toast.LENGTH_SHORT).show();
+                        mCollect.setIcon(R.drawable.icon_collected);
+                    } else {
+                        Toast.makeText(this, R.string.collect_fail, Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(this, R.string.collect_fail, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.collected, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, R.string.collected, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_SHORT).show();
             }
             return true;
         }

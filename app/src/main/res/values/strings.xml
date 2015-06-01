@@ -29,7 +29,9 @@
     <string name="clear_history">清空历史记录</string>
     <string name="search_hint">输入的内容不能为空</string>
     <string name="search_no_history">当前没有历史记录</string>
-    <string name="share_content">"天天购是一款汇集淘宝网最新，最全的限时特价包邮商品。每天更新数千款特价商品,更有服饰、时尚、鞋包、美食、居家等九块九包邮商品,吃喝玩乐一站搞定。"</string>
+    <string name="share_content">
+        "天天购是一款汇集淘宝网最新，最全的限时特价包邮商品。每天更新数千款特价商品,更有服饰、时尚、鞋包、美食、居家等九块九包邮商品,吃喝玩乐一站搞定。"
+    </string>
     <string name="share_url">"https://github.com/shewenbiao/Shopping"</string>
     <string name="title_activity_settings">设置</string>
     <string name="title_activity_user_center">个人中心</string>
@@ -49,12 +51,16 @@
     <string name="_20_feng_ding">20封顶</string>
     <string name="everyday_recommend">每日推荐</string>
     <string name="tomorrow_forenotice">明日预告</string>
-    <string name="network_unavailable">网络不可用</string>
+    <string name="network_unavailable">网络不可用!</string>
 
     <!-- Just use standard Pull Down String when pulling up. These can be set for languages which require it -->
-    <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label</string>
-    <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
-    <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
+    <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label
+    </string>
+    <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label
+    </string>
+    <string name="pull_to_refresh_from_bottom_refreshing_label">
+        @string/pull_to_refresh_refreshing_label
+    </string>
     <string name="title_activity_goods_detail">商品详情</string>
     <string name="title_activity_search_detail">搜索详情</string>
     <string name="ren_qi">人气</string>
@@ -67,11 +73,13 @@
     <string name="title_activity_cart">我的购物车</string>
     <string name="title_activity_collect">收藏</string>
     <string name="title_activity_about">关于我们</string>
-    <string name="summary">"    天天购主要经营男装，女装，数码，家居，母婴，鞋包，美妆，美食，美容护肤各大品牌类商品，更有全场九块九超值商品。每天上新，定有你所爱。天天购精心挑选商品，比一比价格，我们都是最优惠的。"</string>
+    <string name="summary">"
+        天天购主要经营男装，女装，数码，家居，母婴，鞋包，美妆，美食，美容护肤各大品牌类商品，更有全场九块九超值商品。每天上新，定有你所爱。天天购精心挑选商品，比一比价格，我们都是最优惠的。"
+    </string>
     <string name="version_summary">天天购V</string>
     <string name="check_update_hint">当前已是最新版本</string>
     <string name="clear_cache_dialog_title">清除缓存</string>
-    <string name="clear_cache_dialog_message">"    清除缓存将永久删除所有搜索记录，确定清除缓存吗？"</string>
+    <string name="clear_cache_dialog_message">" 清除缓存将永久删除所有搜索记录，确定清除缓存吗？"</string>
     <string name="btn_ok">确定</string>
     <string name="btn_cancel">取消</string>
     <string name="clear_cache_success_hint">清除缓存成功!</string>
