@@ -13,17 +13,19 @@ import android.webkit.WebViewClient;
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.constant.DataUrl;
 
-public class CartActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity {
 
     private Toolbar mToolbar;
     private WebView mWebView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setContentView(R.layout.activity_order);
         initView();
     }
-    private void initView(){
+
+    private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
@@ -36,9 +38,9 @@ public class CartActivity extends BaseActivity {
         mWebView = (WebView) findViewById(R.id.goods_webview);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl(DataUrl.PREFIX_CART);
+        mWebView.loadUrl(DataUrl.PREFIX_LOGIN);
         // 在WebView中打开链接（默认行为是使用浏览器，设置此项后都用WebView打开）
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -50,7 +52,7 @@ public class CartActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cart, menu);
+        getMenuInflater().inflate(R.menu.menu_order, menu);
         return true;
     }
 
@@ -73,11 +75,9 @@ public class CartActivity extends BaseActivity {
      * 按键响应，在WebView中查看网页时，按返回键的时候按浏览历史退回,如果不做此项处理则整个WebView返回退出
      */
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         // Check if the key event was the Back button and if there's history
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack())
-        {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
             // 返回键退回
             mWebView.goBack();
             return true;

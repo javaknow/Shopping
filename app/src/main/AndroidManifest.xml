@@ -37,9 +37,9 @@
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED"/>
     <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+
+    <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
     <application
         android:name=".application.ShoppingApplicaiton"
         android:allowBackup="true"
@@ -67,7 +67,6 @@
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
-
         </activity>
         <activity
             android:name=".activity.SearchActivity"
@@ -108,12 +107,12 @@
         <activity
             android:name="com.renn.rennsdk.oauth.OAuthActivity"
             android:configChanges="orientation|navigation|keyboardHidden"/>
-        <!--<activity-->
-        <!--android:name=".yxapi.YXEntryActivity"-->
-        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
-        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-        <!--android:exported="true"-->
-        <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".yxapi.YXEntryActivity" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
+        <!-- android:exported="true" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -250,9 +249,15 @@
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService">
         </service>
+
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

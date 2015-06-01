@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.shopping.swb.shopping.R;
 
@@ -13,6 +14,7 @@ public class UserCenterActivity extends BaseActivity implements View.OnClickList
 
     private Toolbar mToolbar;
     private View mOrder,mCart,mLogistics,mCollect;
+    private Button mLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +35,12 @@ public class UserCenterActivity extends BaseActivity implements View.OnClickList
         mCart = findViewById(R.id.cart);
         mLogistics = findViewById(R.id.logistic);
         mCollect = findViewById(R.id.collect);
+        mLogin = (Button) findViewById(R.id.user_login);
         mOrder.setOnClickListener(this);
         mCart.setOnClickListener(this);
         mLogistics.setOnClickListener(this);
         mCollect.setOnClickListener(this);
-
+        mLogin.setOnClickListener(this);
     }
 
     @Override
@@ -80,6 +83,10 @@ public class UserCenterActivity extends BaseActivity implements View.OnClickList
             case R.id.collect:
                 Intent collectIntent = new Intent(this,CollectActivity.class);
                 startActivity(collectIntent);
+                break;
+            case R.id.user_login:
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
                 break;
         }
     }

@@ -153,9 +153,11 @@ public class DataUrl {
  //搜索详情接口
     public static final String PREFIX_SEARCH = "http://jkjby.yijia.com/jkjby/view/tmzk_api.php?start=0&sort=s&price=0,10000&keyword=";
  //订单页面接口
-    public static final String PREFIX_ORDER = "http://h5.m.taobao.com/awp/mtb/mtb.htm?target=present&ttid=400000_21517587@jkjby_iPhone_1.0#!/awp/mtb/mtb.htm";
-    //淘宝登陆页面接口
-    public static final String PREFIX_LOGIN = "http://login.m.taobao.com/login.htm?tpl_redirect_url=http%3A%2F%2Fd.m.taobao.com%2Fmy_bag.htm%3Ftarget%3Dpresent%26ttid%3D400000_21517587%2540jkjby_iPhone_1.0&sid=1c816a00c8e15929b672903d3f32208f&ttid=400000_21517587%40jkjby_iPhone_1.0";
+ public static final String PREFIX_ORDER = "http://h5.m.taobao.com/awp/mtb/olist.htm?sta=4&target=present&ttid=400000_21517587@jkjby_iPhone_1.0";
+    //购物车页面接口
+    public static final String PREFIX_CART = "http://login.m.taobao.com/login.htm?tpl_redirect_url=http%3A%2F%2Fd.m.taobao.com%2Fmy_bag.htm%3Ftarget%3Dpresent%26ttid%3D400000_21517587%2540jkjby_iPhone_1.0&sid=1cc57601326d3b178d4f0b6a9a717ea7&ttid=400000_21517587%40jkjby_iPhone_1.0";
+    //淘宝登录页面接口
+    public static final String PREFIX_LOGIN = "http://login.m.taobao.com/login.htm?redirectURL=http%3A%2F%2Fmy.m.taobao.com%2FmyTaobao.htm%3Ftarget%3Dpush%26ttid%3D400000_21517587%2540jkjby_iPhone_1.0%26sid%3D1cc57601326d3b178d4f0b6a9a717ea7&sid=1cc57601326d3b178d4f0b6a9a717ea7&ttid=400000_21517587%40jkjby_iPhone_1.0";
     //物流页面接口
     public static final String PREFIX_LOGISTICS = "http://h5.m.taobao.com/awp/mtb/olist.htm?sta=5&target=present&ttid=400000_21517587@jkjby_iPhone_1.0";
 }
