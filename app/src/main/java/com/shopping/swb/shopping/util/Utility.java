@@ -33,7 +33,7 @@ public class Utility {
 
     }
 
-    public static <T> List<T> getGoodsList(String jsonString, Class<T> cls) {
+    public static <T> List<T> getDataList(String jsonString, Class<T> cls) {
         List<T> list = new ArrayList<T>();
         try {
             Gson gson = new Gson();
@@ -44,7 +44,7 @@ public class Utility {
         return list;
     }
 
-    public static <T> T getGoods(String jsonString, Class<T> cls) {
+    public static <T> T getData(String jsonString, Class<T> cls) {
         T t = null;
         try {
             Gson gson = new Gson();

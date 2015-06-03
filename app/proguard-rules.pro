@@ -84,3 +84,6 @@
 
 -keep,allowshrinking class org.android.spdy.**{*;}
 
+-keep class cn.trinea.android.** { *; }
+-keepclassmembers class cn.trinea.android.** { *; }
+-dontwarn cn.trinea.android.**

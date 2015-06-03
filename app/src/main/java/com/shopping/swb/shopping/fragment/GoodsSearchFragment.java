@@ -163,7 +163,7 @@ public class GoodsSearchFragment extends BaseFragment implements PullToRefreshBa
 
     private void initGoods(String json) {
         try {
-            GoodsList goodsList = Utility.getGoods(json, GoodsList.class);
+            GoodsList goodsList = Utility.getData(json, GoodsList.class);
             mGoodsList.clear();
             mGoodsList.addAll(goodsList.getList());
             mGoodsAdapter.notifyDataSetChanged();

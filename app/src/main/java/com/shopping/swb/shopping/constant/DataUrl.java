@@ -160,4 +160,6 @@ public class DataUrl {
     public static final String PREFIX_LOGIN = "http://login.m.taobao.com/login.htm?redirectURL=http%3A%2F%2Fmy.m.taobao.com%2FmyTaobao.htm%3Ftarget%3Dpush%26ttid%3D400000_21517587%2540jkjby_iPhone_1.0%26sid%3D1cc57601326d3b178d4f0b6a9a717ea7&sid=1cc57601326d3b178d4f0b6a9a717ea7&ttid=400000_21517587%40jkjby_iPhone_1.0";
     //物流页面接口
     public static final String PREFIX_LOGISTICS = "http://h5.m.taobao.com/awp/mtb/olist.htm?sta=5&target=present&ttid=400000_21517587@jkjby_iPhone_1.0";
+    //首页广告接口
+    public static final String PREFIX_ADVERTISEMENT = "http://cloud.yijia.com/yunying/zhuanti.php?app_id=77&app_oid=";
 }

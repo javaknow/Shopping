@@ -47,8 +47,8 @@
     <string name="title_activity_feedback">用户反馈</string>
     <string name="bao_you">包邮</string>
     <string name="discount">折</string>
-    <string name="jkj_bao_you">9快9包邮</string>
-    <string name="_20_feng_ding">20封顶</string>
+    <string name="jkj_bao_you">九块九包邮</string>
+    <string name="_20_feng_ding">二十封顶</string>
     <string name="everyday_recommend">每日推荐</string>
     <string name="tomorrow_forenotice">明日预告</string>
     <string name="network_unavailable">网络不可用!</string>

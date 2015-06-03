@@ -12,9 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -153,7 +151,7 @@ public class GoodsFragment extends BaseFragment implements PullToRefreshBase.OnR
 
     private void initGoods(String json) {
         try {
-            GoodsList goodsList = Utility.getGoods(json, GoodsList.class);
+            GoodsList goodsList = Utility.getData(json, GoodsList.class);
             mGoodsList.clear();
             mGoodsList.addAll(goodsList.getList());
             mGoodsAdapter.notifyDataSetChanged();
