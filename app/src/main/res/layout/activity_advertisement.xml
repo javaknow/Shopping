@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.shopping.swb.shopping.activity.AdvertisementActivity">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar_layout"/>
+    <WebView
+        android:id="@+id/goods_webview"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <fr.castorflex.android.circularprogressbar.CircularProgressBar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/loading"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminate="true"
+        app:cpb_colors="@array/loading_bar_bg_color"
+        app:cpb_rotation_speed="1.0"
+        app:cpb_sweep_speed="1.0"
+        app:cpb_stroke_width="3dp"
+        app:cpb_min_sweep_angle="10"
+        app:cpb_max_sweep_angle="300"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

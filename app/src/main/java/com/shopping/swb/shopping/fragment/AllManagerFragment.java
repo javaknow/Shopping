@@ -21,7 +21,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.melnykov.fab.FloatingActionButton;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shopping.swb.shopping.R;
+import com.shopping.swb.shopping.activity.AdvertisementActivity;
 import com.shopping.swb.shopping.activity.GoodsDetailActivity;
+import com.shopping.swb.shopping.activity.RecommendActivity;
 import com.shopping.swb.shopping.adapter.AdvertisementAdapter;
 import com.shopping.swb.shopping.adapter.ShouYeGoodsAdapter;
 import com.shopping.swb.shopping.constant.DataUrl;
@@ -64,6 +66,7 @@ public class AllManagerFragment extends BaseFragment implements SwipeRefreshLayo
     private List<AdvertisementData> mAdvertisementDatas = new ArrayList<>();
     private View mHeaderView;
     private LinearLayout mIndicator;
+    private View mJkj,mTwenty,mRecommend,mForenotice;
 
     public AllManagerFragment() {
         // Required empty public constructor
@@ -79,26 +82,40 @@ public class AllManagerFragment extends BaseFragment implements SwipeRefreshLayo
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all_manager, container, false);
+        initView(view);
+        setListener();
+        return view;
+    }
+    private void initView(View view){
         mGridView = (GridViewWithHeaderAndFooter) view.findViewById(R.id.gridview);
-        mHeaderView = inflater.inflate(R.layout.header_layout, null);
+        mHeaderView = LayoutInflater.from(mActivity).inflate(R.layout.header_layout, null);
         mGridView.addHeaderView(mHeaderView);
         mHeaderView.setVisibility(View.GONE);
-        mGridView.setOnItemClickListener(this);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
                 android.R.color.holo_blue_bright, android.R.color.holo_orange_light);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
         mViewPager = (AutoScrollViewPager) mHeaderView.findViewById(R.id.viewpager);
         mIndicator = (LinearLayout) mHeaderView.findViewById(R.id.indicator);
         mProgressBar = (CircularProgressBar) view.findViewById(R.id.progress_bar);
         mImageView = (ImageView) view.findViewById(R.id.have_no_data);
         mActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
         mActionButton.hide();
+        mJkj = mHeaderView.findViewById(R.id.jkj_bao_you);
+        mTwenty = mHeaderView.findViewById(R.id._20fengding);
+        mRecommend = mHeaderView.findViewById(R.id.recommend);
+        mForenotice = mHeaderView.findViewById(R.id.forenotice);
+
+    }
+    private void setListener(){
+        mGridView.setOnItemClickListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         mActionButton.setOnClickListener(this);
         mGridView.setOnScrollListener(this);
-        return view;
+        mJkj.setOnClickListener(this);
+        mTwenty.setOnClickListener(this);
+        mRecommend.setOnClickListener(this);
+        mForenotice.setOnClickListener(this);
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -133,6 +150,7 @@ public class AllManagerFragment extends BaseFragment implements SwipeRefreshLayo
                     mProgressBar.setVisibility(View.GONE);
                     if (mGoodsAdapter.getCount() == 0) {
                         mImageView.setVisibility(View.VISIBLE);
+                        mHeaderView.setVisibility(View.GONE);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
                     break;
@@ -186,6 +204,9 @@ public class AllManagerFragment extends BaseFragment implements SwipeRefreshLayo
 
     private void initAdvertisementImg() {
         mImageViews.clear();
+        if(mAdvertisementDatas.size() > 3){
+            mAdvertisementDatas.remove(0);
+        }
         for (int i = 0; i < mAdvertisementDatas.size(); i++) {
             ImageView imageView = new ImageView(mActivity);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -266,9 +287,29 @@ public class AllManagerFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public void onClick(View v) {
-        if (mGoodsAdapter != null) {
-            mGridView.setAdapter(mGoodsAdapter);
-            mActionButton.hide();
+        switch (v.getId()) {
+            case R.id.fab:
+                if (mGoodsAdapter != null) {
+                    mGridView.setAdapter(mGoodsAdapter);
+                    mActionButton.hide();
+                }
+                break;
+            case R.id.jkj_bao_you:
+                break;
+            case R.id._20fengding:
+                break;
+            case R.id.recommend:
+                Intent recommendIntent = new Intent(mActivity, RecommendActivity.class);
+                recommendIntent.putExtra("title",getResources().getString(R.string.everyday_recommend));
+                recommendIntent.putExtra("url",DataUrl.EVERYDAY_RECOMMEND);
+                startActivity(recommendIntent);
+                break;
+            case R.id.forenotice:
+                Intent forenoticeIntent = new Intent(mActivity, RecommendActivity.class);
+                forenoticeIntent.putExtra("title",getResources().getString(R.string.tomorrow_forenotice));
+                forenoticeIntent.putExtra("url",DataUrl.FORENOTICE);
+                startActivity(forenoticeIntent);
+                break;
         }
     }
 
@@ -308,7 +349,7 @@ public class AllManagerFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
     @Override
-    public void onPageSelected(int position) {
+    public void onPageSelected(final int position) {
         for (int i = 0; i < mDots.size(); i++) {
             if (i == position) {
                 mDots.get(i).setImageResource(R.drawable.dot_blue);
@@ -316,6 +357,15 @@ public class AllManagerFragment extends BaseFragment implements SwipeRefreshLayo
                 mDots.get(i).setImageResource(R.drawable.dot_white);
             }
         }
+        mImageViews.get(position).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity,AdvertisementActivity.class);
+                intent.putExtra("title",mAdvertisementDatas.get(position).getTitle());
+                intent.putExtra("link",mAdvertisementDatas.get(position).getLink());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
