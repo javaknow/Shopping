@@ -162,8 +162,10 @@ public class DataUrl {
     public static final String PREFIX_LOGISTICS = "http://h5.m.taobao.com/awp/mtb/olist.htm?sta=5&target=present&ttid=400000_21517587@jkjby_iPhone_1.0";
     //首页广告接口
     public static final String PREFIX_ADVERTISEMENT = "http://cloud.yijia.com/yunying/zhuanti.php?app_id=77&app_oid=";
-    //九块九包邮接口
-    //20封顶接口
+    //九块九包邮接口 http://app.api.repaiapp.com/sx/songshijie/tejia/check_get.php?p_start=0&p_end=10000&sort=s&page=0
+    public static final String PREFIX_JKJBAOYOU = "http://app.api.repaiapp.com/sx/songshijie/tejia/check_get.php?p_start=0&p_end=10000&sort=s";
+    //20封顶接口 http://app.api.repaiapp.com/sx/songshijie/fromten/check_get.php?p_start=0&p_end=10000&sort=s&page=0
+    public static final String PREFIX_20FENGDING = "http://app.api.repaiapp.com/sx/songshijie/fromten/check_get.php?p_start=0&p_end=10000&sort=s";
     //每日推荐接口
     public static final String EVERYDAY_RECOMMEND = "http://app.api.repaiapp.com/sx/songshijie/goods/get.php";
     //明日预告接口

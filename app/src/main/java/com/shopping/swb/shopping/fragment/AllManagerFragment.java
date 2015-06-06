@@ -23,6 +23,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shopping.swb.shopping.R;
 import com.shopping.swb.shopping.activity.AdvertisementActivity;
 import com.shopping.swb.shopping.activity.GoodsDetailActivity;
+import com.shopping.swb.shopping.activity.JKJActivity;
 import com.shopping.swb.shopping.activity.RecommendActivity;
 import com.shopping.swb.shopping.adapter.AdvertisementAdapter;
 import com.shopping.swb.shopping.adapter.ShouYeGoodsAdapter;
@@ -295,8 +296,16 @@ public class AllManagerFragment extends BaseFragment implements SwipeRefreshLayo
                 }
                 break;
             case R.id.jkj_bao_you:
+                Intent jkjIntent = new Intent(mActivity, JKJActivity.class);
+                jkjIntent.putExtra("title",getResources().getString(R.string.jkj_bao_you));
+                jkjIntent.putExtra("url",DataUrl.PREFIX_JKJBAOYOU);
+                startActivity(jkjIntent);
                 break;
             case R.id._20fengding:
+                Intent twentyIntent = new Intent(mActivity, JKJActivity.class);
+                twentyIntent.putExtra("title",getResources().getString(R.string._20_feng_ding));
+                twentyIntent.putExtra("url",DataUrl.PREFIX_20FENGDING);
+                startActivity(twentyIntent);
                 break;
             case R.id.recommend:
                 Intent recommendIntent = new Intent(mActivity, RecommendActivity.class);

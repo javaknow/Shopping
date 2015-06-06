@@ -267,6 +267,11 @@
         <activity
             android:name=".activity.RecommendActivity"
             android:label="@string/title_activity_recommend"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.JKJActivity"
+            android:label="@string/title_activity_jkj"
             android:screenOrientation="portrait">
         </activity>
     </application>
