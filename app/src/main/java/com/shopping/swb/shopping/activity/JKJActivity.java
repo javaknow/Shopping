@@ -197,15 +197,17 @@ public class JKJActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, GoodsDetailActivity.class);
-        intent.putExtra("id", mGoodsList.get(position).getId());
-        intent.putExtra("title", mGoodsList.get(position).getTitle());
-        intent.putExtra("origin_price", mGoodsList.get(position).getOri_price());
-        intent.putExtra("now_price", mGoodsList.get(position).getNow_price());
-        intent.putExtra("discount", mGoodsList.get(position).getDiscount());
-        intent.putExtra("sold", mGoodsList.get(position).getSold_volu());
-        intent.putExtra("pic_url", mGoodsList.get(position).getPic_url());
-        startActivity(intent);
+        if(position < mGoodsList.size()) {
+            Intent intent = new Intent(this, GoodsDetailActivity.class);
+            intent.putExtra("id", mGoodsList.get(position).getId());
+            intent.putExtra("title", mGoodsList.get(position).getTitle());
+            intent.putExtra("origin_price", mGoodsList.get(position).getOri_price());
+            intent.putExtra("now_price", mGoodsList.get(position).getNow_price());
+            intent.putExtra("discount", mGoodsList.get(position).getDiscount());
+            intent.putExtra("sold", mGoodsList.get(position).getSold_volu());
+            intent.putExtra("pic_url", mGoodsList.get(position).getPic_url());
+            startActivity(intent);
+        }
     }
 
     @Override
